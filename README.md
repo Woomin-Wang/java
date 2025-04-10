@@ -30,7 +30,7 @@
 - [열거형-ENUM](https://familiar-dragon-4ed.notion.site/ENUM-1cabf88cd0f5807a95fad9a786bb1fd6?pvs=4)
 - [java.time 패키지](https://github.com/Woomin-Wang/TIL/blob/main/Java/java.time.md)
 - [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
-- [중첩 클래스, 내부 클래스]()
+- [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
 
 <br>
 
