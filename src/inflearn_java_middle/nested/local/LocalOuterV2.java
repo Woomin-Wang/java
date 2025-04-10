@@ -6,6 +6,7 @@ public class LocalOuterV2 {
     public void process(int paramVar) {
         int localVar = 1;
 
+        // 인터페이스 Printer 구현
         class LocalPrinter implements Printer {
             int value = 0;
 

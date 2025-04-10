@@ -1,14 +1,14 @@
-package inflearn_java_middle.nested.nested.inner.ex1;
+package inflearn_java_middle.nested.inner.ex1;
 
 public class Car {
     private String model;
     private int chargeLevel;
     private Engine engine;
 
-    public Car(String model, int chargeLevel, Engine engine) {
+    public Car(String model, int chargeLevel) {
         this.model = model;
         this.chargeLevel = chargeLevel;
-        this.engine = engine;
+        this.engine = new Engine(this);
     }
 
     public String getModel() {

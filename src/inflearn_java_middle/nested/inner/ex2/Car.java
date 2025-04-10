@@ -1,4 +1,4 @@
-package inflearn_java_middle.nested.nested.inner.ex2;
+package inflearn_java_middle.nested.inner.ex2;
 
 public class Car {
     private String model;
@@ -13,13 +13,13 @@ public class Car {
 
     public void start() {
         engine.start();
-        System.out.println(model + " 시작  완료");
+        System.out.println(model + " 시작 완료");
     }
 
     private class Engine {
         public void start() {
-            System.out.println("충전 레벨 확인: " + chargeLevel);
-            System.out.println(model + "의 엔진을 구동합니다.");
+            System.out.println("충전 레벨 확인 = " + chargeLevel);
+            System.out.println(model + "의 엔진 구동");
         }
     }
 }

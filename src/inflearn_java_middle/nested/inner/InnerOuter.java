@@ -1,4 +1,4 @@
-package inflearn_java_middle.nested.nested.inner;
+package inflearn_java_middle.nested.inner;
 
 public class InnerOuter {
     private static int outClassValue = 3;
@@ -8,9 +8,14 @@ public class InnerOuter {
         private int innerInstanceValue = 1;
 
         public void print() {
+            //자신의 멤버에 접근
             System.out.println("innerInstanceValue = " + innerInstanceValue);
+
+            //외부 클래스의 인스턴스 멤버에 접근 가능, private 접근 가능
             System.out.println("outInstanceValue = " + outInstanceValue);
-            System.out.println(InnerOuter.outClassValue);
+
+            //외부 클래스의 클래스 멤버에는 접근 가능, private 접근 가능
+            System.out.println("outClassValue = " + outClassValue);
         }
     }
 }

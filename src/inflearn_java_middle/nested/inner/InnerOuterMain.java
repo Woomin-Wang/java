@@ -1,4 +1,4 @@
-package inflearn_java_middle.nested.nested.inner;
+package inflearn_java_middle.nested.inner;
 
 public class InnerOuterMain {
     public static void main(String[] args) {

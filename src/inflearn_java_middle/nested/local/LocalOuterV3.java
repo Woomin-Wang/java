@@ -6,6 +6,7 @@ public class LocalOuterV3 {
     public Printer process(int paramVar) {
         int localVar = 1; // 지역 변수는 스택 프레임이 종료되는 순간 함께 제거
 
+        // 인터페이스 Printer 구현
         class LocalPrinter implements Printer {
             int value = 0;
 

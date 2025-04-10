@@ -1,4 +1,4 @@
-package inflearn_java_middle.nested.nested.inner.ex2;
+package inflearn_java_middle.nested.inner.ex1;
 
 public class CarMain {
     public static void main(String[] args) {
