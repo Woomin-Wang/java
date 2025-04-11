@@ -31,6 +31,8 @@
 - [java.time 패키지](https://github.com/Woomin-Wang/TIL/blob/main/Java/java.time.md)
 - [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
 - [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
+- [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
+
 
 <br>
 
@@ -40,3 +42,8 @@
 - [JVM-Runtime Date Area](https://velog.io/@woomin-wang/JAVA-JVM-Runtime-Data-Area)
 - [참조 타입, 인스턴스 타입의 관계](https://velog.io/@woomin-wang/JAVA-%EC%9E%90%EB%B0%94-%EB%8B%A4%ED%98%95%EC%84%B1-%EC%B0%B8%EC%A1%B0-%ED%83%80%EC%9E%85%EA%B3%BC-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%ED%83%80%EC%9E%85%EC%9D%98-%EA%B4%80%EA%B3%84)
 - [메서드 오버라이딩의 원리](https://velog.io/@woomin-wang/Java-%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C-%EC%98%A4%EB%B2%84%EB%9D%BC%EC%9D%B4%EB%94%A9-%EB%A9%94%EC%84%9C%EB%93%9C%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EB%8A%94-%EC%9B%90%EB%A6%AC)
+
+  <br>
+
+  **[토이 프로젝트]**
+
