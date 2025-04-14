@@ -23,8 +23,8 @@ public class LocalOuterV4 {
 
         Printer printer = new LocalPrinter();
         // 만약 localVar의 값을 변경한다면? 다시 캡쳐?
-        // localVar = 10;
-        // paramVar = 20;
+//        localVar = 10;
+//        paramVar = 20;
 
         return printer;
     }
