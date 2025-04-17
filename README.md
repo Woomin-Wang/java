@@ -28,7 +28,6 @@
 - [String](https://familiar-dragon-4ed.notion.site/String-1c6bf88cd0f580d0b096df293f66f59d?pvs=4)
 - [래퍼 객체](https://familiar-dragon-4ed.notion.site/1c8bf88cd0f5806295eaf95791b18831?pvs=4)
 - [열거형-ENUM](https://familiar-dragon-4ed.notion.site/ENUM-1cabf88cd0f5807a95fad9a786bb1fd6?pvs=4)
-- [java.time 패키지]([https://github.com/Woomin-Wang/TIL/blob/main/Java/java.time.md](https://github.com/Woomin-Wang/java/blob/main/java.time.md))
 - [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
 - [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
 - [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
