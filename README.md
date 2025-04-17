@@ -33,6 +33,10 @@
 - [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
 - [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
 
+<br>
+
+**[김영한 실전 자바 중급 2편]**
+- [제네릭]()
 
 <br>
 
@@ -45,5 +49,5 @@
 
   <br>
 
-  **[토이 프로젝트]**
+**[토이 프로젝트]**
 
