@@ -35,7 +35,7 @@
 <br>
 
 **[김영한 실전 자바 중급 2편]**
-- [제네릭]()
+- [제네릭](https://familiar-dragon-4ed.notion.site/1d8bf88cd0f5804ea056dc152cf8d510?pvs=4)
 
 <br>
 
