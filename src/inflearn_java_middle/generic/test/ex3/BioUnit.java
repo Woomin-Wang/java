@@ -1,7 +1,6 @@
 package inflearn_java_middle.generic.test.ex3;
 
 public class BioUnit {
-
     private String name;
     private int hp;
 

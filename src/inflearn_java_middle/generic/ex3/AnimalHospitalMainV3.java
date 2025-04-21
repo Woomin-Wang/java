@@ -21,10 +21,10 @@ public class AnimalHospitalMainV3 {
         catHospital.set(cat);
         catHospital.checkup();
 
-        // 문제1: 개 병원에 고양이 전달
+        // 문제1 해결: 개 병원에 고양이 전달
         // dogHospital.set(cat); // 다른 타입 입력: 컴파일 오류
 
-        // 문제2: 개 타입 반환
+        // 문제2 해결: 개 타입 반환
         // 캐스팅 하지 않아도 원하는 타입이 반환
         dogHospital.set(dog);
         Dog biggerDog = dogHospital.bigger(new Dog("멍멍이2", 200));

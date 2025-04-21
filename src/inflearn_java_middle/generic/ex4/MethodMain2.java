@@ -8,11 +8,11 @@ public class MethodMain2 {
         Dog dog = new Dog("멍멍이", 100);
         Cat cat = new Cat("냐옹이", 100);
 
-        AnimalMethod.<Dog>checkup(dog);
-        AnimalMethod.<Cat>checkup(cat);
+        AnimalMethod.checkup(dog);
+        AnimalMethod.checkup(cat);
 
         Dog targetDog = new Dog("큰멍멍이", 200);
-        Dog biggerDog = AnimalMethod.<Dog>bigger(dog, targetDog);
+        Dog biggerDog = AnimalMethod.getBigger(dog, targetDog);
         System.out.println("biggerDog = " + biggerDog);
 
         // 제네릭 메서드 bigger의 타입 매개변수 T가 명시적으로 Dog로 지정되었기 때문에,

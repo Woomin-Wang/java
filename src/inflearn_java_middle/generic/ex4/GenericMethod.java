@@ -3,12 +3,12 @@ package inflearn_java_middle.generic.ex4;
 public class GenericMethod {
 
     public static Object objMethod(Object obj) {
-        System.out.println("Object print: " + obj);
+        System.out.println("object print: " + obj);
         return obj;
     }
 
     public static <T> T genericMethod(T t) {
-        System.out.println("Generic print: " + t);
+        System.out.println("generic print: " + t);
         return t;
     }
 

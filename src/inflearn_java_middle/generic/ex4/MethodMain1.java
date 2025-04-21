@@ -5,7 +5,7 @@ public class MethodMain1 {
     public static void main(String[] args) {
 
         Integer i = 10;
-        Object object =GenericMethod.objMethod(i);
+        Object object = GenericMethod.objMethod(i);
         Integer result = (Integer) GenericMethod.objMethod(i);
 
         // 타입 인자(Type Argument)
