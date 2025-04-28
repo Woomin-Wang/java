@@ -5,8 +5,9 @@ public class CarExample {
         Car car = new Car();
 
         car.run1();
+        System.out.println();
         car.run2();
-
+        System.out.println();
         car.run3(new Tire() {
             @Override
             public void roll() {

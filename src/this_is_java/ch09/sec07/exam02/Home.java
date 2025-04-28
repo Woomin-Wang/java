@@ -1,6 +1,7 @@
 package this_is_java.ch09.sec07.exam02;
 
 public class Home {
+    // 필드에 익명 구현 객체 대입
     private RemoteControl rc = new RemoteControl() {
         @Override
         public void turnOn() {
@@ -18,7 +19,9 @@ public class Home {
         rc.turnOff();
     }
 
+    // 메서드 (지역 변수 이용()
     public void use2() {
+        // 지역 변수에 익명 구현 객체 대입
         RemoteControl rc = new RemoteControl() {
             @Override
             public void turnOn() {

@@ -7,7 +7,7 @@ public class ButtonExample {
         class OkListener implements Button.ClickListener {
             @Override
             public void onClick() {
-                System.out.println("Ok button click!!");
+                System.out.println("Ok 버튼을 클릭했습니다.");
             }
         }
 
@@ -20,7 +20,7 @@ public class ButtonExample {
         class CancelListener implements Button.ClickListener {
             @Override
             public void onClick() {
-                System.out.println("Cancel button click!!");
+                System.out.println("Cancel 버튼을 클릭했습니다.");
             }
         }
 
