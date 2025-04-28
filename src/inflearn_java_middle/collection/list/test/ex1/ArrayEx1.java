@@ -1,4 +1,4 @@
-package inflearn_java_middle.collection.test.ex1;
+package inflearn_java_middle.collection.list.test.ex1;
 
 public class ArrayEx1 {
 

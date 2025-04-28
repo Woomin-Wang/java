@@ -1,6 +1,4 @@
-package inflearn_java_middle.collection.test.ex1;
-
-import com.sun.security.jgss.GSSUtil;
+package inflearn_java_middle.collection.list.test.ex1;
 
 import java.util.ArrayList;
 import java.util.List;

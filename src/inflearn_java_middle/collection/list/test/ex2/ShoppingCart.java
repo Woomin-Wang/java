@@ -1,4 +1,4 @@
-package inflearn_java_middle.collection.test.ex2;
+package inflearn_java_middle.collection.list.test.ex2;
 
 import java.util.ArrayList;
 import java.util.List;
