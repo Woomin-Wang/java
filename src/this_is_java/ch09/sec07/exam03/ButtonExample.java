@@ -1,6 +1,6 @@
 package this_is_java.ch09.sec07.exam03;
 
-import this_is_java.ch09.sec06.exam01.Button;
+import this_is_java.ch09.sec06.exam2.Button;
 
 public class ButtonExample {
     public static void main(String[] args) {
