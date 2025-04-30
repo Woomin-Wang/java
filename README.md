@@ -18,7 +18,7 @@
 - [클래스](https://familiar-dragon-4ed.notion.site/1a5bf88cd0f5801bb174da6db6e88c56?pvs=4)
 - [상속](https://familiar-dragon-4ed.notion.site/1abbf88cd0f58015939ceb5b7e5c05a7?pvs=4)
 - [인터페이스](https://familiar-dragon-4ed.notion.site/1abbf88cd0f58015939ceb5b7e5c05a7?pvs=4)
-- [중첩 선언과 익명 객체]()
+- [중첩 선언과 익명 객체](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f580e9bdeaed7149f5a566?pvs=4)
 
 <br>
 
@@ -44,9 +44,13 @@
 - [JDK, JRE, JVM](https://velog.io/@woomin-wang/JAVA-JVM%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C)
 - [JVM-Runtime Date Area](https://velog.io/@woomin-wang/JAVA-JVM-Runtime-Data-Area)
 - [참조 타입, 인스턴스 타입의 관계](https://velog.io/@woomin-wang/JAVA-%EC%9E%90%EB%B0%94-%EB%8B%A4%ED%98%95%EC%84%B1-%EC%B0%B8%EC%A1%B0-%ED%83%80%EC%9E%85%EA%B3%BC-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%ED%83%80%EC%9E%85%EC%9D%98-%EA%B4%80%EA%B3%84)
-- [메서드 오버라이딩의 원리](https://velog.io/@woomin-wang/Java-%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C-%EC%98%A4%EB%B2%84%EB%9D%BC%EC%9D%B4%EB%94%A9-%EB%A9%94%EC%84%9C%EB%93%9C%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EB%8A%94-%EC%9B%90%EB%A6%AC)
+- [메서드 오버라이딩의 원리](https://velog.io/@woomin-wang/Java-%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C-%EC%98%A4%EB%B2%84%EB%9D%BC%EC%9D%B4%EB%94%A9-%EB%A9%94%EC%84%9C%EB%93%9C%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EB%8A%94-%EC%9B%90%EB%A6%AC) 
+- [추상클래스와 인터페이스: 무엇을 선택할까?](https://velog.io/@woomin-wang/JAVA-%EC%B6%94%EC%83%81%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4-%EB%AC%B4%EC%97%87%EC%9D%84-%EC%84%A0%ED%83%9D%ED%95%A0%EA%B9%8C)
+- [익명 클래스: 사용법, 장점, 한계](https://velog.io/@woomin-wang/JAVA-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%97%90-%EC%84%A0%EC%96%B8%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%A9%94%EC%84%9C%EB%93%9C)
 
   <br>
 
 **[토이 프로젝트]**
+
+- [서점 관리 시스템](https://github.com/Woomin-Wang/java-toy-project)
 
