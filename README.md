@@ -19,7 +19,10 @@
 - [상속](https://familiar-dragon-4ed.notion.site/1abbf88cd0f58015939ceb5b7e5c05a7?pvs=4)
 - [인터페이스](https://familiar-dragon-4ed.notion.site/1abbf88cd0f58015939ceb5b7e5c05a7?pvs=4)
 - [중첩 선언과 익명 객체](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f580e9bdeaed7149f5a566?pvs=4)
+- [라이브러리와 모듈](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f580848ddfc7f3369bde69?pvs=4)
+- [예외 처리](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f5800ab349d2bb35cefda1?pvs=4)
 
+  
 <br>
 
 **[김영한 실전 자바 중급 1편]**
