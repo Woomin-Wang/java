@@ -4,23 +4,30 @@
 
 <br/>
 
-> 1절. 왜 제네릭을 사용해야 하는가?
-> 
-> 2절. 제네릭 타입(class<T>, interface<T>)
+> 1절. 제네릭이란?
 >
-> 3절. 멀티 타입 파라미터(class<K,V, ...>, interface<K,T, ...>)
+> 2절. 왜 제네릭을 사용해야 하는가?
 > 
-> 4절. 제네릭 메소드(<T,R> R method(T t))
+> 3절. 제네릭 타입(class<T>, interface<T>)
 >
-> 5절. 제한된 타입 파라미터(<T extends 최상위타입>)
->
-> 6절. 와일드카드 타입(<?>, <? extends ...>, <? super>)
+> 4절. 멀티 타입 파라미터(class<K,V, ...>, interface<K,T, ...>)
 > 
-> 7절. 제네릭 타입의 상속과 구현
+> 5절. 제네릭 메소드(<T,R> R method(T t))
+>
+> 6절. 제한된 타입 파라미터(<T extends 최상위타입>)
+>
+> 7절. 와일드카드 타입(<?>, <? extends ...>, <? super>)
+> 
+> 8절. 제네릭 타입의 상속과 구현
+>
+> 9절. 타입 소거
 
 <br/>
 
 ## 1. 제네릭이란?
+- `제네릭(Generic)`은 클래스나 인터페이스, 메소드에서 사용할 타입을 파라미터로 지정하는 기능이다.
+- 클래스나 메소드 내부에서 사용할 데이터 타입을 미리 지정하지 않고, 사용 시점에 지정하도록 하여 코드의 재사용성과 타입 안정성을 높인다.
+
 
 <br>
 
@@ -42,6 +49,7 @@
 <br>
 
 ## 3. 제네릭 타입(class, interface)
+
 ```java
 public class 클래스명<T> {...}
 public interface 인터페이스명<T> {...}
@@ -54,10 +62,12 @@ public interface 인터페이스명<T> {...}
 - Object 클래스 사용
 ```java
 public class Box {
-  private Object object
-  public void set(Object object) { this.object = object; }
-  public Object get() { return object; }
+	private Object object;
+	public void set(Object object) { this.object = object; }
+	public Object get() { return object; }
+}
 ```
+
 <br>
 
 - 필드 타입을 `Object` 타입으로 선언한 이유는 필드에 모든 종류의 객체를 담기 위함이다.
@@ -73,9 +83,10 @@ public class Box {
 - 제네릭 사용
 ```java
 public class Box<T> {
-    private T t;
-    public T get() { return t; }
-    public void set(T t) { this.t = t; }
+	private T t;
+	public T get() { return t; }
+	public void set(T t) { this.t = t; }
+}
 ```
 - 타입 파라미터는 일반적으로 대문자 알파벳 한 글자로 표현한다.
 - 제네릭 타입은 클래스 또는 인터페이스 이름 뒤에 "<>" 부호가 붙는다.
@@ -182,10 +193,45 @@ public class ChildProduct<T, M, C> extends Product<T, M> {...}
 
 <br>
 
+## 9. 타입 소거
+- 제네릭은 컴파일 시에만 타입 정보를 사용하고, 런타임 시에는 타입 정보가 제거된다.
+- 즉, 제네릭 타입은 컴파일 후에 실제 클래스 파일에 존재하지 않으며, 모든 타입 파라미터는 `Object` 또는 제한된 상위 타입으로 대체된다.
 
+<br>
 
+```java
+public class Box<T> {
+    private T value;
+    public void set(T value) { this.value = value; }
+    public T get() { return value; }
+}
 
+```
 
+```java
+public class Box {
+    private Object value;
+    public void set(Object value) { this.value = value; }
+    public Object get() { return value; }
+}
+
+```
+
+### 소거 방식
+- 타입 파라미터 `<T>`가 제한이 없을 경우, 런타임에는 `Object`로 변환된다.
+- 제한된 타입 파라미터 `<T extends 상위타입>`이 있을 경우, 런타임에는 그 상위타입으로 변환된다.
+  - `<T extends Number>`는 Number로 변환된다.
+
+<br>
+
+### 한계점
+- instanceof 연산자를 사용할 수 없다.
+- new T()와 같은 생성자 호출이 불가능하다
+  
+<br>
+
+## 마무리
+글을 간략하게 작성하다보니 생략된 코드들이 있으니, 자세히 보려면 [링크](https://github.com/Woomin-Wang/java/tree/main/src/inflearn_java_middle/generic)를 클릭해주세요.
 
 
 
