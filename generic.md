@@ -217,10 +217,31 @@ public class Box {
 
 ```
 
+<br>
+
 ### 소거 방식
 - 타입 파라미터 `<T>`가 제한이 없을 경우, 런타임에는 `Object`로 변환된다.
 - 제한된 타입 파라미터 `<T extends 상위타입>`이 있을 경우, 런타임에는 그 상위타입으로 변환된다.
   - `<T extends Number>`는 Number로 변환된다.
+
+<br>
+
+
+```java
+Box<String> box = new Box<>();
+box.set("hello");
+String value = box.get();
+
+```
+
+```java
+Box box = new Box();
+box.set("hello");
+String value = (String) box.get();  // 여기서 컴파일러가 자동으로 (String) 캐스팅을 넣어줌
+
+```
+- 컴파일러가 메소드 호출 시 자동으로 적절한 캐스팅 코드를 삽입한다.
+
 
 <br>
 
