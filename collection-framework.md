@@ -42,11 +42,12 @@
 
 > 아래는 해당 인터페이스를 구현한 클래스들이다.
 
-|인터페이스 분류|    특징 | 구현 클래스|
-|:-------:|:------|:-------|
-|Collection - <br/>List 계열|순서를 유지하고 저장 <br/>중복 저장 가능 | ArrayList, Vector, LinkedList|
-|Collection - <br/>Set 계열|순서를 유지하지 않고 저장 <br/>중복 저장 안됨 | HashSet, TreeSet|
-|Map 계열|키와 값의 쌍으로 저장 <br/> 키는 중복 저장 안됨 | HashMap, Hashtable, <br/> TreeMap, Properties|
+|           **인터페이스 분류**          | **특징**                                                                                   | **대표 구현 클래스**                                                    |
+| :-----------------------------: | :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
+|     **Collection - List 계열**    | - 요소의 **순서 유지**<br/>- **중복 저장 가능**                                                       | `ArrayList`, `LinkedList`, `Vector`                              |
+|     **Collection - Set 계열**     | - 요소의 **순서 없음** (단, `LinkedHashSet`은 순서 유지)<br/>- **중복 저장 불가**                           | `HashSet`, `LinkedHashSet`, `TreeSet`                            |
+| **Collection - Queue/Deque 계열** | - **Queue**: FIFO (선입선출)<br/>- **Stack**: LIFO (후입선출) <br/>- **Deque**: 양방향 삽입/삭제           | `LinkedList`, `ArrayDeque`, `PriorityQueue`                      |
+|            **Map 계열**           | - **Key-Value** 쌍으로 저장<br/>- **Key는 중복 불가**, **Value는 중복 가능**<br/>- `keySet()`은 Set처럼 작동 | `HashMap`, `LinkedHashMap`, `TreeMap`, `Hashtable`, `Properties` |
 
 <br/>
 
@@ -235,8 +236,7 @@ public boolean contains(Object searchValue) {
 
 ### TreeSet
 - 내부적으로 레드-블랙 트리를 사용한다.
-- 요소는 항상 정렬된 상태로 저장된다.
-	- 정렬 기준은 기본 정렬(Comparable), 사용자 지정(Comparator)이 있다.
+- 요소는 항상 정렬된 상태로 저장되며, 정렬 기준은 기본 정렬(Comparable), 사용자 지정(Comparator)이 있다.
  - 모든 연산의 시간 복잡도는 O(log n)이다.
  - 순회 시 중위 순회 방식을 사용한다.
  - 데이터를 정렬된 상태로 저장하면서 집합의 특성을 유지해야 할 때 적합하다
@@ -264,22 +264,10 @@ public boolean contains(Object searchValue) {
 -  두 메서드는 Key의 중복 여부를 판단하는 기준이 되며, 검색/저장/삭제 등 모든 연산은 Key를 기준으로 처리된다.
 -  특히, `hashCode()`는 Value가 아닌 Key에만 사용된다.
 
-<br>
-
-### Hashtable
-- Hashtable은 HashMap과 동일한 내부 구조를 가지고 있다.
-- 차이점은 Hashtable은 동기화된(synchronized) 메소드로 구성되어 있다.
 
 <br>
 
-### Properties
-- 애플리케이션이나 데이터베이스 등의 정보가 저장된 프로퍼티(*.properties) 파일을 읽을 때 주로 사용된다.
-- 이는 Hashtable의 하위 클래스이기 때문에 Hashtable의 모든 특징을 그대로 가진다.
-  - 차이점은 Hashtable은 키와 값을 다양한 타입으로 지정이 가능한데 비해, Properties는 키와 값을 `String`타입으로 제한한 컬렉션이다. 
-
-<br>
-
-## 5. 검색 기능을 강화시킨 컬렉션
+## 6. 검색 기능을 강화시킨 컬렉션
 ### 개요
 - 컬렉션 프레임워크는 검색 기능을 강화시킨 TreeSet과 TreeMap을 제공한다.
 - 이진 트리를 이용해서 계층적 구조를 가지면서 객체를 .
@@ -311,28 +299,46 @@ public boolean contains(Object searchValue) {
 
 <br>
 
-## 6. LIFO와 FIFO 컬렉션
-### 개요
-- 후입선출(LIFO: Last In First Out): 나중에 넣은 객체가 먼저 빠져나가는 자료구조
-- 선입선출(FIFO: First In First Out): 먼저 넣은 객체가 먼저 빠져나가는 자료구조
-
-> 컬렉션 프레임워크에는 LIFO 자료구조를 제공하는 스택(Stack) 클래스와 FIFO 자료구조를 제공하는 큐(Queue) 인터페이스를 제공하고 있다.
+## 7. LIFO와 FIFO 컬렉션
 
 ### Stack
-- 스택 클래스는 LIFO 자료구조를 구현한 클래스이다.
+- 스택은 LIFO(Last In First Out, 후입선출) 방식의 자료구조이다.
+- 자바의 Stack 클래스는 내부적으로 Vector를 기반으로 구현되어 있으나, 현재는 Deque를 사용을 권장한다.
+
 ```java
-Stack<E> stack = new Stack<E>();
+Stack<E> stack = new Stack<E>(); // 비권장
+
+Deque<E> stack = new ArrayDeque<>(); // 권장 
 ```
+<br>
+
 ### Queue
-- 큐 인터페이스는 FIFO 방식으로 동작한다.
-  - Queue 인터페이스를 구현한 대표적인 클래스는 LinkedList이다.
+- 큐는 FIFO(First In First Out, 선입선출) 방식의 자료구조이다.
+- Queue 인터페이스를 구현한 대표적인 클래스는 ArrayDeque, LinkedList이다.
+	- 이 중 ArrayDeque가 성능 면에서 더 우수하여 일반적으로 더 권장된다.
+   
+<br>
+
+### Deque
+- 덱은 양방향으로 삽입과 삭제가 가능한 자료구조이다.
+- 즉, 스택 또는 큐처럼 사용할 수 있으며, Deque는 Stack과 Queue의 기능을 모두 포함한다.
+- 대표적인 구현체는 Queue 인터페이스와 마찬가지로 ArrayDeque, LinkedList이다.
+
 ```java
-Queue<E> queue = new LinkedList<E>();
+Deque<E> deque = new ArrayDeque<>();
+
+// 스택처럼 사용 (LIFO)
+deque.push(element);
+deque.pop();
+
+// 큐처럼 사용 (FIFO)
+deque.offer(element);
+deque.poll();
 ```
 
 <br>
 
-## 7. 동기화된 컬렉션
+## 8. 동기화된 컬렉션
 ### 개요
 - 컬렉션 프레임워크의 대부분의 클래스들은 싱글 스레드 환경에서 사용할 수 있도록 설계됐다.
 - 따라서, 여러 스레드가 동시에 컬렉션에 접근한다면 의도하지 않게 요소가 변경될 수 있는 불안전한 상태가 된다.
@@ -353,9 +359,7 @@ Queue<E> queue = new LinkedList<E>();
 
 <br>
 
-
-
-## 8. 병렬 처리를 위한 컬렉션
+## 9. 병렬 처리를 위한 컬렉션
 ### 개요
 - 동기화된 컬렉션은 멀티 스레드 환경에서 하나의 스레드가 요소를 안전하게 처리하도록 도와주지만, 전체 요소를 빠르게 처리하지는 못한다.
 	- 이는 하나의 스레드가 요소를 처리할 때, 전체 잠금이 발생하여 다른 스레드는 대기 상태가 되기 때문이다.
