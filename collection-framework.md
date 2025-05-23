@@ -46,20 +46,17 @@
 ### 컬렉션 프레임워크의 구성 요소
 
 - 인터페이스
-	- 컬렉션의 기본 동작(예: add, remove)을 정의하는 틀이다.
-	- List, Set, Queue, Map 등
+	- 컬렉션이 가져야 할 기본 동작을 정의하는 틀
+	- 예: List, Set, Queue, Map
 
 - 구현 클래스
-	- 인터페이스를 실제 동작하게 만든 클래스이다.
-	- ArrayList, HashSet, LinkedList 등
+	- 인터페이스를 실제 동작하게 만든 클래스와 그 메서드
+	- 예: ArrayList의 add(), remove(), HashSet 등
 
 - 알고리즘
-	- 정렬, 검색, 변환 같은 데이터 처리 방법이다.
-	- Collections, Arrays 클래스의 정적 메서드와 일부 구현 클래스가 제공하는 특수 기능 포함한다.
-   
-<br>
-
-> `add()`, `remove()` 같은 기본 동작은 인터페이스에서 규약만 만들고, 구현 클래스가 직접 구현한다. 알고리즘은 데이터를 정렬하거나 탐색하는 특별한 처리 방법을 말하며, 별도의 정적 메서드나 구현체가 제공한다.
+	- 데이터 정렬, 검색, 변환 등 특별한 처리 방법
+	- Collections와 Arrays 클래스의 정적 메서드 및 일부 구현체의 특수 기능 포함
+	- 예: Collections.sort(), Arrays.binarySearch(), TreeSet.subSet()
 
 <br>
 
@@ -75,10 +72,10 @@
 
 |           **인터페이스 분류**          | **특징**                                                                                   | **대표 구현 클래스**                                                    |
 | :-----------------------------: | :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
-|     **Collection - List 계열**    | - 요소의 **순서 유지**<br/>- **중복 저장 가능**                                                       | `ArrayList`, `LinkedList`, `Vector`                              |
-|     **Collection - Set 계열**     | - 요소의 **순서 없음** (단, `LinkedHashSet`은 순서 유지)<br/>- **중복 저장 불가**                           | `HashSet`, `LinkedHashSet`, `TreeSet`                            |
-| **Collection - Queue/Deque 계열** | - **Queue**: FIFO (선입선출)<br/>- **Stack**: LIFO (후입선출) <br/>- **Deque**: 양방향 삽입/삭제           | `LinkedList`, `ArrayDeque`, `PriorityQueue`                      |
-|            **Map 계열**           | - **Key-Value** 쌍으로 저장<br/>- **Key는 중복 불가**, **Value는 중복 가능**<br/>- `keySet()`은 Set처럼 작동 | `HashMap`, `LinkedHashMap`, `TreeMap`, `Hashtable`, `Properties` |
+|     **Collection - List 계열**    | - 요소의 순서 유지<br/>- 중복 저장 가능                                                       | `ArrayList`, `LinkedList`, `Vector`                              |
+|     **Collection - Set 계열**     | - 요소의 순서 없음 <br/>-`LinkedHashSet`은 순서 유지<br/>- 중복 저장 불가                           | `HashSet`, `LinkedHashSet`, `TreeSet`                            |
+| **Collection - Queue/Deque 계열** | - Queue: FIFO (선입선출)<br/>- Stack: LIFO (후입선출) <br/>- Deque: 양방향 삽입/삭제           | `LinkedList`, `ArrayDeque`, `PriorityQueue`                      |
+|            **Map 계열**           | - Key-Value 쌍으로 저장<br/>- Key는 중복 불가, Value는 중복 가능<br/>- `keySet()`은 Set처럼 작동 | `HashMap`, `LinkedHashMap`, `TreeMap`, `Hashtable`, `Properties` |
 
 <br/>
 
@@ -265,16 +262,6 @@ public boolean contains(Object searchValue) {
 
 <br>
 
-### TreeSet
-- 내부적으로 레드-블랙 트리를 사용한다.
-- 요소는 항상 정렬된 상태로 저장되며, 정렬 기준은 기본 정렬(Comparable), 사용자 지정(Comparator)이 있다.
- - 모든 연산의 시간 복잡도는 O(log n)이다.
- - 순회 시 중위 순회 방식을 사용한다.
- - 데이터를 정렬된 상태로 저장하면서 집합의 특성을 유지해야 할 때 적합하다
-
-
-<br>
-
 ## 5. Map 컬렉션
 ### Map 특징
 - **Map 컬렉션은 키(Key)와 값(Value)의 쌍으로 구성된 Entry 객체를 저장하는 자료구조이다.**
@@ -285,36 +272,54 @@ public boolean contains(Object searchValue) {
 
 ### Map과 Set의 구조적 유사성
 - Map의 Key 구조는 Set과 동일하여, HashMap과 HashSet, TreeMap과 TreeSet은 내부 구현이 매우 유사하다. 
-- 실제로 HashSet은 내부적으로 HashMap을 이용해 Key만 저장하며, Value는 더미(dummy) 값으로 설정된다.
+- **실제로 HashSet은 내부적으로 HashMap을 이용해 Key만 저장하며, Value는 더미(dummy) 값으로 설정된다.**
 
 <br>
 
 ### HashMap
 -  HashMap은 Map 인터페이스를 구현한 대표적인 Map 컬렉션이다.
 -  Key로 사용할 객체는 `hashCode()`와 `equasl()` 메소드를 반드시 오버라이딩해야 한다.
--  두 메서드는 Key의 중복 여부를 판단하는 기준이 되며, 검색/저장/삭제 등 모든 연산은 Key를 기준으로 처리된다.
--  특히, `hashCode()`는 Value가 아닌 Key에만 사용된다.
-
+-  **두 메서드는 Key의 중복 여부를 판단하는 기준이 되며, 검색/저장/삭제 등 모든 연산은 Key를 기준으로 처리된다.**
+	-  즉, `hashCode()`는 Value가 아닌 Key에만 사용된다.
 
 <br>
 
-## 6. 검색 기능을 강화시킨 컬렉션
+### LinkedHashMap
+- 
+
+<br>
+
+## 6. 검색과 순회 기능을 강화시킨 컬렉션
 ### 개요
 - 컬렉션 프레임워크는 검색 기능을 강화시킨 TreeSet과 TreeMap을 제공한다.
-- 이진 트리를 이용해서 계층적 구조를 가지면서 객체를 .
-
+	- 이 컬렉션들은 이진 트리를 이용해서 계층적 구조를 가지면서 객체를 저장한다.
 
 <br>
 
 ### TreeSet
-- TreeSet은 Set 인터페이스를 구현한 클래스로, 중복 없이 데이터를 저장한다.
-- 내부적으로 이진 탐색 트리를 사용해 저장된 데이터가 항상 오름차순으로 정렬되어 있다.
+- Set 인터페이스를 구현한 컬렉션으로 중복을 허용하지 않는다.
+- 내부적으로 레드-블랙 트리(이진 탐색 트리)를 사용하며, 요소는 항상 정렬된 상태로 저장된다.
+- 정렬 기준은 두 가지 방식 중 하나이다.
+	-  Comparable: 인터페이스를 구현해 기본 정렬 기준 사용
+ 	-  Comparator: 객체를 전달해 사용자 지정 기준 적용
+- 주요 연산(삽입, 삭제, 검색)의 시간 복잡도는 O(log n)이다.
+- 중위 순회 방식을 사용해, 정렬 기준에 따라 요소를 순서대로 탐색할 수 있다.
+
+<br>
+
+>  TreeSet (정확히는 내부적으로 사용하는 TreeMap의 키 구조)은 레드-블랙 트리라는 이진 탐색 트리 기반이기 때문에, 요소를 순서대로 탐색할 때는 반드시 중위 순회 방식을 사용합니다.
 
 <br>
 
 ### TreeMap
-- TreeMap은 Map 인터페이스를 구현한 컬렉션이다.
-- 내부 구조는 TreeSet과 비슷한 이진 탐색 트리이며, 키를 기준으로 데이터를 정렬해 저장한다.
+- Map 인터페이스를 구현한 컬렉션으로, 키와 값(Key-Value Pair) 을 저장한다.
+- TreeSet과의 가장 큰 차이는, 키뿐만 아니라 키와 연관된 값이 함께 저장되는 Map.Entry 객체를 저장한다는 점이다.
+
+<br>
+
+### TreeSet 객체와 TreeMap의 키가 Comparable을 구현하고 있지 않을 경우
+- 저장할 때 `ClassCastException` 오류가 발생한다.
+- 자바가 두 객체를 비교하는 방법을 몰라서 발생하는 문제이다.
 
 <br>
 
@@ -323,10 +328,9 @@ public boolean contains(Object searchValue) {
 - 이를 위해 저장되는 객체는 Comparable 인터페이를 구현해야 한다.
 	- Comparable 인터페이스는 `compareTo()` 메서드가 있어서 두 객체를 비교하는 기준을 정할 수 있다.
 
-### TreeSet 객체와 TreeMap의 키가 Comparable을 구현하고 있지 않을 경우
-- 저장할 때 `ClassCastException` 오류가 발생한다.
-- 자바가 두 객체를 비교하는 방법을 몰라서 발생하는 문제이다.
-  
+<br>
+
+### Iterable, Iterator
 
 <br>
 
