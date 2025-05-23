@@ -28,6 +28,7 @@ public class MyArrayListV3 {
 
     }
 
+    // 코드 추가
     public void add(int index, Object e) {
         if(size == elementData.length) {
             grow();
@@ -57,7 +58,7 @@ public class MyArrayListV3 {
         return oldValue;
     }
 
-    // 코드 추가 요소의 index부터 마지막까지 왼쪽으로 밀기
+    // 코드 추가, 요소의 index부터 마지막까지 왼쪽으로 밀기
     private void shiftLeftFrom(int index) {
         for (int i = index; i < size -1; i++) {
             elementData[i] = elementData[i + 1];

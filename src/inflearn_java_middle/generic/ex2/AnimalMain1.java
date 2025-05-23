@@ -27,6 +27,5 @@ public class AnimalMain1 {
         animalBox.setValue(animal);
         Animal findAnimal  = animalBox.getValue();
         System.out.println("findAnimal = " + findAnimal);
-
     }
 }

@@ -23,7 +23,7 @@ public class CommonKeyValueSum1 {
 
         for (String key : map1.keySet()) {
             if(map2.containsKey(key)){
-                result.put(key, map2.get(key));
+                result.put(key, map1.get(key) + map2.get(key));
             }
         }
         System.out.println(result);

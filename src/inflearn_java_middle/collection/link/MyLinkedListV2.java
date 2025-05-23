@@ -27,16 +27,16 @@ public class MyLinkedListV2 {
     // 추가 코드
     public void add(int index, Object e) {
         Node newNode = new Node(e);
-        Node prev;
 
         if(index == 0) {
             newNode.next = first;
             first = newNode;
         } else {
-            prev = getNode(index - 1);
+            Node prev = getNode(index - 1);
             newNode.next = prev.next;
             prev.next = newNode;
         }
+        size++;
     }
 
 

@@ -10,7 +10,7 @@ public class MyArrayListV3Main {
 
         // 원하는 위치에 추가
         System.out.println("addLast");
-        list.add(3, "addList"); // O(1)
+        list.add(3, "addLast"); // O(1)
         System.out.println(list);
 
         System.out.println("addFirst");
@@ -22,10 +22,8 @@ public class MyArrayListV3Main {
         System.out.println("removed(4) = " + removed1);
         System.out.println(list);
 
-        Object removed2 = list.remove(0); //remove Last O(1)
+        Object removed2 = list.remove(0); //remove First O(n)
         System.out.println("removed(0) = " + removed2);
         System.out.println(list);
-
-
     }
 }

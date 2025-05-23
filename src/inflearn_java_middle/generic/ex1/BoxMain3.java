@@ -1,6 +1,6 @@
 package inflearn_java_middle.generic.ex1;
 
-public class BoxMain3 {
+public class  BoxMain3 {
 
     public static void main(String[] args) {
         GenericBox<Integer> integerBox = new GenericBox<Integer>(); //생성 시점의 T의 타입 결정

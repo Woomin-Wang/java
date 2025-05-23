@@ -2,10 +2,10 @@ package inflearn_java_middle.collection.array;
 
 import java.util.Arrays;
 
-public class MyArrayListV4 <E> {
+public class MyArrayListV4<E> {
 
     private static final int DEFAULT_CAPACITY = 5;
-
+ 
     private Object[] elementData;
     private int size = 0;
 

@@ -1,6 +1,5 @@
 package inflearn_java_middle.generic.ex3;
 
-
 import inflearn_java_middle.generic.animal.Animal;
 import inflearn_java_middle.generic.animal.Cat;
 import inflearn_java_middle.generic.animal.Dog;

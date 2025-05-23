@@ -1,6 +1,6 @@
 package inflearn_java_middle.collection.array;
 
-public class MyArrayListV1Main {
+public class  MyArrayListV1Main {
     public static void main(String[] args) {
 
         MyArrayListV1 list = new MyArrayListV1();
