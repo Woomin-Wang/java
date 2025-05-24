@@ -337,32 +337,52 @@ public boolean contains(Object searchValue) {
 <br>
 
 ### Iterable
-- `java.lang.Iterable<T>` 인터페이스는 **반복 가능한 컬렉션 객체**를 나타낸다.
-- 이 인터페이스를 구현한 클래스는 향상된 for문을 사용할 수 있다.
+- `java.lang.Iterable<T>` 인터페이스는 **반복 가능한 객체**임을 나타낸다.
+- **이 인터페이스를 구현한 클래스는 `iterator()` 메서드를 제공하며, 이를 통해 요소를 순차적으로 접근할 수 있는 Iterator 객체를 반환한다.**!
+- 향상된 for문을 사용할 수 있는 기본 조건이 된다.
+- 대부분의 자바 컬렉션 클래스(List, Set, Queue 등)는 이 인터페이스를 구현한다.
 
 <br>
 
+**향상된 for문**
 ```java
-Iterator<T> iterator = 컬렉션.iterator();
+for (Element e : myObject) {
+    System.out.println(e);
+}
 ```
+- 위 코드는 컴파일 시 아래와 같이 변환된다.
 
-- `iterator()` 메서드를 통해 Iterator 객체를 반환하고, 이를 통해 요소를 하나씩 순회할 수 있다.
-- Iterable은 반복을 위한 기반 기능만 제공하며, 실제 순회는 Iterator가 담당한다.
-- 자바의 대부분의 컬렉션 클래스(List, Set, Queue 등)는 이 인터페이스를 구현한다.
+<br>
+  
+```java
+Iterator<Element> it = myObject.iterator();  // 우리가 정의한 iterator() 호출됨
+while (it.hasNext()) {
+    Element e = it.next();
+    System.out.println(e);
+}
+
+```
+- 향상된 for문은 Iterable 인터페이스의 `iterator()` 메서드를 컴파일러가 자동 호출하여, `hasNext()`와 `next()`를 이용한 반복문으로 변환된다.
+- 이를 통해 코드가 간결해지며, 다양한 컬렉션을 일관된 방식으로 쉽게 순회할 수 있다.
 
 <br>
 
 ### Iterator
-- `java.util.Iterator<T>` 인터페이스는 컬렉션의 요소를 직접 순회하는 데 사용된다.
-- Iterator는 컬렉션 내부 구조를 몰라도, 안전하고 일관되게 요소를 꺼내고 순회할 수 있다.
+- `java.util.Iterator<T>` 인터페이스는 요소를 직접 순회하는 데 사용된다.
+- 내부 구조에 상관없이, 안전하고 일관되게 요소를 꺼내고 순회할 수 있다.
 - 순회 상태를 내부적으로 관리하며, 순차적으로 요소에 접근한다.
+
+<br>
   
 | 메서드                 | 설명                           |
 | ------------------- | ---------------------------- |
 | `boolean hasNext()` | 아직 순회하지 않은 요소가 있으면 `true` 반환 |
 | `T next()`          | 다음 요소를 반환하고 순회 위치를 한 칸 이동    |
-| `void remove()`     | 현재 위치의 요소를 제거 (선택적, 잘 안 씀)   |
+| `void remove()`     | 현재 위치의 요소를 제거 (선택적)  |
 
+<br>
+
+>Iterable은 반복을 지원하는 객체임을 명시하며, Iterator를 통해 실제 요소에 순차적으로 접근할 수 있도록 한다. 이를 통해 **다양한 자료구조를 내부 구현과 관계없이 일관되고 통일된 방식으로 순회할 수 있다.**
 
 <br>
 
