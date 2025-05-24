@@ -258,7 +258,8 @@ public boolean contains(Object searchValue) {
 ### LinkedHashSet
 - HashSet에 이중 연결 리스트를 더해 요소의 삽입 순서를 보장한다.
 - 요소는 노드의 형태로 버킷에 저장되고, 이 노드들이 연결 리스트로 순서를 유지한다.
-- 정렬은 하지 않고, 단지 삽입 순서만 유지한다.
+- 정렬 기능은 없으며, 삽입한 순서대로만 요소를 순회할 수 있다.
+
 
 <br>
 
@@ -285,52 +286,83 @@ public boolean contains(Object searchValue) {
 <br>
 
 ### LinkedHashMap
-- 
+- HashMap에 이중 연결 리스트를 추가해 키-값 쌍의 삽입 순서를 유지한다.
+- 기본 HashMap의 빠른 조회 성능에 순서 보장 기능을 더한 컬렉션이다.
 
 <br>
 
 ## 6. 검색과 순회 기능을 강화시킨 컬렉션
 ### 개요
-- 컬렉션 프레임워크는 검색 기능을 강화시킨 TreeSet과 TreeMap을 제공한다.
-	- 이 컬렉션들은 이진 트리를 이용해서 계층적 구조를 가지면서 객체를 저장한다.
+- 자바 컬렉션 프레임워크는 검색과 순회 기능이 뛰어난 TreeSet과 TreeMap 컬렉션을 제공한다.
+- 이들은 내부적으로 레드-블랙 트리라는 균형 이진 탐색 트리 자료구조를 사용하여, 계층적이고 정렬된 상태로 객체를 저장한다.
 
 <br>
 
 ### TreeSet
 - Set 인터페이스를 구현한 컬렉션으로 중복을 허용하지 않는다.
-- 내부적으로 레드-블랙 트리(이진 탐색 트리)를 사용하며, 요소는 항상 정렬된 상태로 저장된다.
-- 정렬 기준은 두 가지 방식 중 하나이다.
-	-  Comparable: 인터페이스를 구현해 기본 정렬 기준 사용
- 	-  Comparator: 객체를 전달해 사용자 지정 기준 적용
+- **내부적으로 레드-블랙 트리를 사용하며, 요소는 항상 정렬된 상태로 저장된다.**
+- 요소의 정렬 기준은 두 가지 방식 중 하나이다.
+	- **Comparable**: 요소 객체가 Comparable 인터페이스를 구현하여 **기본 정렬 기준**을 제공
+ 	- **Comparator**: 외부에서 Comparator 객체를 전달하여 **사용자 지정 정렬 기준** 적용
 - 주요 연산(삽입, 삭제, 검색)의 시간 복잡도는 O(log n)이다.
-- 중위 순회 방식을 사용해, 정렬 기준에 따라 요소를 순서대로 탐색할 수 있다.
-
-<br>
-
->  TreeSet (정확히는 내부적으로 사용하는 TreeMap의 키 구조)은 레드-블랙 트리라는 이진 탐색 트리 기반이기 때문에, 요소를 순서대로 탐색할 때는 반드시 중위 순회 방식을 사용합니다.
+- 요소를 순회 시 **중위 순회 방식**을 사용하여, 정렬 기준에 따라 순서대로 탐색한다.
 
 <br>
 
 ### TreeMap
 - Map 인터페이스를 구현한 컬렉션으로, 키와 값(Key-Value Pair) 을 저장한다.
-- TreeSet과의 가장 큰 차이는, 키뿐만 아니라 키와 연관된 값이 함께 저장되는 Map.Entry 객체를 저장한다는 점이다.
+- **TreeSet과의 가장 큰 차이점은 Map.Entry(key, value) 형태로 값까지 함께 저장된다는 점이다.**
 
 <br>
 
-### TreeSet 객체와 TreeMap의 키가 Comparable을 구현하고 있지 않을 경우
-- 저장할 때 `ClassCastException` 오류가 발생한다.
-- 자바가 두 객체를 비교하는 방법을 몰라서 발생하는 문제이다.
+### Compareable
+- **객체 자체에서 기본 정렬 기준을 정의할 때 사용한다.**
+- `java.lang.Comparable<T>` 인터페이스를 구현하고, `compareTo(T o)` 메서드를 오버라이딩해서 두 객체 간의 비교 기준을 정한다.
+- 대표적으로 String, Integer, Double 등 자바 기본 클래스들은 이미 Comparable를 구현하고 있다.
+- 정렬 시 `Collections.sort(list)` 또는 `Arrays.sort(array)` 등이 내부적으로 `compareTo()`를 호출한다.
+ 
+<br>
+
+### Comparator
+- **객체 외부에서 정렬 기준을 정의할 때 사용한다.**
+- `java.util.Comparator<T>` 인터페이스를 구현하거나 람다식으로 전달한다.
+- `compare(T o1, T o2)` 메서드를 오버라이딩하여 두 객체를 비교한다.
+- 하나의 객체에 대해 여러 기준으로 정렬이 필요할 때 유용하다.
+- `Collections.sort(list, comparator)`처럼 정렬 시 사용되며, TreeSet을 생성할 때도 `new TreeSet<>(comparator)` 형태로 활용된다.
 
 <br>
 
-### Compareable, Comparator
-- TreeSet과 TreeMap은 저장하는 순간, 자동으로 키나 객체를 오름차순으로 졍렬한다.
-- 이를 위해 저장되는 객체는 Comparable 인터페이를 구현해야 한다.
-	- Comparable 인터페이스는 `compareTo()` 메서드가 있어서 두 객체를 비교하는 기준을 정할 수 있다.
+> TreeSet과 TreeMap은 내부적으로 요소(또는 키)를 정렬하여 저장하므로, 반드시 Comparable을 구현하거나, 생성 시 Comparator를 제공해야 한다. 만약 비교 기준이 없으면 ClassCastException 예외가 발생한다.
+  
+<br>
+
+### Iterable
+- `java.lang.Iterable<T>` 인터페이스는 **반복 가능한 컬렉션 객체**를 나타낸다.
+- 이 인터페이스를 구현한 클래스는 향상된 for문을 사용할 수 있다.
 
 <br>
 
-### Iterable, Iterator
+```java
+Iterator<T> iterator = 컬렉션.iterator();
+```
+
+- `iterator()` 메서드를 통해 Iterator 객체를 반환하고, 이를 통해 요소를 하나씩 순회할 수 있다.
+- Iterable은 반복을 위한 기반 기능만 제공하며, 실제 순회는 Iterator가 담당한다.
+- 자바의 대부분의 컬렉션 클래스(List, Set, Queue 등)는 이 인터페이스를 구현한다.
+
+<br>
+
+### Iterator
+- `java.util.Iterator<T>` 인터페이스는 컬렉션의 요소를 직접 순회하는 데 사용된다.
+- Iterator는 컬렉션 내부 구조를 몰라도, 안전하고 일관되게 요소를 꺼내고 순회할 수 있다.
+- 순회 상태를 내부적으로 관리하며, 순차적으로 요소에 접근한다.
+  
+| 메서드                 | 설명                           |
+| ------------------- | ---------------------------- |
+| `boolean hasNext()` | 아직 순회하지 않은 요소가 있으면 `true` 반환 |
+| `T next()`          | 다음 요소를 반환하고 순회 위치를 한 칸 이동    |
+| `void remove()`     | 현재 위치의 요소를 제거 (선택적, 잘 안 씀)   |
+
 
 <br>
 
@@ -345,6 +377,7 @@ Stack<E> stack = new Stack<E>(); // 비권장
 
 Deque<E> stack = new ArrayDeque<>(); // 권장 
 ```
+
 <br>
 
 ### Queue
