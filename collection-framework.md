@@ -73,7 +73,7 @@
 |           **인터페이스 분류**          | **특징**                                                                                   | **대표 구현 클래스**                                                    |
 | :-----------------------------: | :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
 |     **Collection - List 계열**    | - 요소의 순서 유지<br/>- 중복 저장 가능                                                       | `ArrayList`, `LinkedList`, `Vector`                              |
-|     **Collection - Set 계열**     | - 요소의 순서 없음 <br/>-`LinkedHashSet`은 순서 유지<br/>- 중복 저장 불가                           | `HashSet`, `LinkedHashSet`, `TreeSet`                            |
+|     **Collection - Set 계열**     | - 요소의 순서 없음 <br/>-LinkedHashSet은 순서 유지<br/>- 중복 저장 불가                           | `HashSet`, `LinkedHashSet`, `TreeSet`                            |
 | **Collection - Queue/Deque 계열** | - Queue: FIFO (선입선출)<br/>- Stack: LIFO (후입선출) <br/>- Deque: 양방향 삽입/삭제           | `LinkedList`, `ArrayDeque`, `PriorityQueue`                      |
 |            **Map 계열**           | - Key-Value 쌍으로 저장<br/>- Key는 중복 불가, Value는 중복 가능<br/>- `keySet()`은 Set처럼 작동 | `HashMap`, `LinkedHashMap`, `TreeMap`, `Hashtable`, `Properties` |
 
@@ -295,11 +295,11 @@ public boolean contains(Object searchValue) {
 ### TreeSet, TreeMap
 - TreeSet과 TreeMap은 자동 정렬과 빠른 탐색을 지원하는 컬렉션이다.
 - 내부적으로 레드-블랙 트리(균형 이진 탐색 트리)를 사용하며, 주요 연산의 시간 복잡도는 O(log n)이다.
-- 요소는 항상 정렬된 상태로 저장되며, 정렬 기준은 다음 중 하나를 사용한다
+- 요소는 삽입하는 순간부터 정렬된 상태를 유지하며, 정렬 기준은 다음 중 하나를 반드시 제공해야 한다.
   	- **Comparable**: 요소 객체가 Comparable 인터페이스를 구현하여 **기본 정렬 기준**을 제공
  	- **Comparator**: 외부에서 Comparator 객체를 전달하여 **사용자 지정 정렬 기준** 적용
-- 요소를 순회 시 **중위 순회 방식**을 사용해 정렬된 순서로 탐색이 가능하다.
-- TreeMap은 TreeSet과 달리, 키와 값을 쌍(Map.Entry<K, V>)으로 저장한다.
+- 요소를 순회할 때는 중위 순회 방식으로 진행되며, 삽입한 순서와 무관하게 정렬된 순서로 탐색된다.
+- TreeMap은 TreeSet과 달리, 키와 값을 쌍(Map.Entry<K, V>)으로 저장하며, 키 기준으로 정렬된다.
 
 
 <br>
@@ -312,16 +312,18 @@ public boolean contains(Object searchValue) {
 - **객체 자체에서 기본 정렬 기준을 정의할 때 사용한다.**
 - `java.lang.Comparable<T>` 인터페이스를 구현하고, `compareTo(T o)` 메서드를 오버라이딩해서 두 객체 간의 비교 기준을 정한다.
 - 대표적으로 String, Integer, Double 등 자바 기본 클래스들은 이미 Comparable를 구현하고 있다.
-- 정렬 시 `Collections.sort(list)` 또는 `Arrays.sort(array)` 등이 내부적으로 `compareTo()`를 호출한다.
- 
+- `Collections.sort(list)`, `list.sort(null)`, `Arrays.sort(array)`, `new TreeSet<>()` 등이 내부적으로 `compareTo()`를 사용한다.
+
 <br>
 
 ### Comparator
 - **객체 외부에서 정렬 기준을 정의할 때 사용한다.**
 - `java.util.Comparator<T>` 인터페이스를 구현하거나 람다식으로 전달한다.
-- `compare(T o1, T o2)` 메서드를 오버라이딩하여 두 객체를 비교한다.
-- 하나의 객체에 대해 여러 기준으로 정렬이 필요할 때 유용하다.
-- `Collections.sort(list, comparator)` 또는 `new TreeSet<>(comparator)` 등으로 사용된다.
+- `compare(T o1, T o2)` 메서드를 오버라이딩하여 두 객체를 비교 기준을 정한다.
+- `Collections.sort(list, comparator)`, `list.sort(comparator)`, `new TreeSet<>(comparator)` 등이 내부적으로 `compare()`를 사용한다.
+
+자바는 개발자가 복잡한 정렬 알고리즘을 신경 쓰지 않으면서 정렬의 기준만 간단히 변경할 수 있도록, 정렬릐 기준을 Comparable, Comparator 인터페이스를 통해 추상화해두었다.
+객체의 정렬이 필요한 경우 Comparable을 통해 기본 자연순서를 제공하고 자연 순선 외에 다른 정렬 기준이 추가로 필요하면 Comparator을 제공하자.
   
 <br>
 
