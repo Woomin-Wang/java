@@ -260,7 +260,6 @@ public boolean contains(Object searchValue) {
 - 요소는 노드의 형태로 버킷에 저장되고, 이 노드들이 연결 리스트로 순서를 유지한다.
 - 정렬 기능은 없으며, 삽입한 순서대로만 요소를 순회할 수 있다.
 
-
 <br>
 
 ## 5. Map 컬렉션
@@ -292,26 +291,20 @@ public boolean contains(Object searchValue) {
 <br>
 
 ## 6. 검색과 순회 기능을 강화시킨 컬렉션
-### 개요
-- 자바 컬렉션 프레임워크는 검색과 순회 기능이 뛰어난 TreeSet과 TreeMap 컬렉션을 제공한다.
-- 이들은 내부적으로 레드-블랙 트리라는 균형 이진 탐색 트리 자료구조를 사용하여, 계층적이고 정렬된 상태로 객체를 저장한다.
 
-<br>
-
-### TreeSet
-- Set 인터페이스를 구현한 컬렉션으로 중복을 허용하지 않는다.
-- **내부적으로 레드-블랙 트리를 사용하며, 요소는 항상 정렬된 상태로 저장된다.**
-- 요소의 정렬 기준은 두 가지 방식 중 하나이다.
-	- **Comparable**: 요소 객체가 Comparable 인터페이스를 구현하여 **기본 정렬 기준**을 제공
+### TreeSet, TreeMap
+- TreeSet과 TreeMap은 자동 정렬과 빠른 탐색을 지원하는 컬렉션이다.
+- 내부적으로 레드-블랙 트리(균형 이진 탐색 트리)를 사용하며, 주요 연산의 시간 복잡도는 O(log n)이다.
+- 요소는 항상 정렬된 상태로 저장되며, 정렬 기준은 다음 중 하나를 사용한다
+  	- **Comparable**: 요소 객체가 Comparable 인터페이스를 구현하여 **기본 정렬 기준**을 제공
  	- **Comparator**: 외부에서 Comparator 객체를 전달하여 **사용자 지정 정렬 기준** 적용
-- 주요 연산(삽입, 삭제, 검색)의 시간 복잡도는 O(log n)이다.
-- 요소를 순회 시 **중위 순회 방식**을 사용하여, 정렬 기준에 따라 순서대로 탐색한다.
+- 요소를 순회 시 **중위 순회 방식**을 사용해 정렬된 순서로 탐색이 가능하다.
+- TreeMap은 TreeSet과 달리, 키와 값을 쌍(Map.Entry<K, V>)으로 저장한다.
+
 
 <br>
 
-### TreeMap
-- Map 인터페이스를 구현한 컬렉션으로, 키와 값(Key-Value Pair) 을 저장한다.
-- **TreeSet과의 가장 큰 차이점은 Map.Entry(key, value) 형태로 값까지 함께 저장된다는 점이다.**
+> `Arrays.sort()`나 `Collections.sort()`는 호출 시에 정렬을 수행하지만, Tree 계열 컬렉션은 요소를 추가할 때마다 자동으로 정렬 상태를 유지한다. 이때 Comparable 또는 Comparator 중 하나를 반드시 제공해야 하며, 제공하지 않으면 ClassCastException이 발생한다.
 
 <br>
 
@@ -328,17 +321,13 @@ public boolean contains(Object searchValue) {
 - `java.util.Comparator<T>` 인터페이스를 구현하거나 람다식으로 전달한다.
 - `compare(T o1, T o2)` 메서드를 오버라이딩하여 두 객체를 비교한다.
 - 하나의 객체에 대해 여러 기준으로 정렬이 필요할 때 유용하다.
-- `Collections.sort(list, comparator)`처럼 정렬 시 사용되며, TreeSet을 생성할 때도 `new TreeSet<>(comparator)` 형태로 활용된다.
-
-<br>
-
-> TreeSet과 TreeMap은 내부적으로 요소(또는 키)를 정렬하여 저장하므로, 반드시 Comparable을 구현하거나, 생성 시 Comparator를 제공해야 한다. 만약 비교 기준이 없으면 ClassCastException 예외가 발생한다.
+- `Collections.sort(list, comparator)` 또는 `new TreeSet<>(comparator)` 등으로 사용된다.
   
 <br>
 
 ### Iterable
 - `java.lang.Iterable<T>` 인터페이스는 **반복 가능한 객체**임을 나타낸다.
-- **이 인터페이스를 구현한 클래스는 `iterator()` 메서드를 제공하며, 이를 통해 요소를 순차적으로 접근할 수 있는 Iterator 객체를 반환한다.**!
+- **이 인터페이스를 구현한 클래스는 `iterator()` 메서드를 제공하며, 이를 통해 요소를 순차적으로 접근할 수 있는 Iterator 객체를 반환한다.**
 - 향상된 for문을 사용할 수 있는 기본 조건이 된다.
 - 대부분의 자바 컬렉션 클래스(List, Set, Queue 등)는 이 인터페이스를 구현한다.
 
