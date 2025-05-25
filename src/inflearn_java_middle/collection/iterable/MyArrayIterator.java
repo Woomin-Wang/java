@@ -20,4 +20,5 @@ public class MyArrayIterator implements Iterator<Integer> {
     public Integer next() {
         return targetArr[++currentIndex];
     }
+
 }
