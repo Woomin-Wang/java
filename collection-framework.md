@@ -120,6 +120,11 @@
 
 > ArrayList는 메모리상에 요소들이 연속적으로 저장되기 때문에 CPU 캐시 효율이 높고, 객체 접근 속도도 빨라 대부분의 상황에서 더 우수한 성능을 보인다. 반면, LinkedList는 앞부분에서 자주 삽입/삭제하는 경우 포인터만 조작하기 때문에 효율적이다.
 
+### Vector
+- 내부 구조는 ArrayList와 동일하지만, Vector는 동기화된(synchronized) 메서드로 구성되어 있다.
+- 멀티 스레드가 동시에 이 메서드를 실행할 수 없다.
+	- 이를 스레드가 안전(Thread Safe)하다라고 말한다.
+
 <br/>
 
 ## 3. Hash 알고리즘
@@ -469,5 +474,9 @@ Queue<E> queue = new ConcurrentLinkedQueue<E>();
 ```
 - 락-프리 알로리즘은 여러 갱의 스레드가 동시에 접근할 경우, 잠금을 사용하지 않도고 최소한 하나의 스레드가 안전하게 요소를 저장하거나 얻도록 해준다.
 
+<br>
+<br>
 
+## 마무리
+글을 간략하게 작성하다보니 생략된 코드들이 있으니, 자세히 보려면 [이것이 자바다](https://github.com/Woomin-Wang/java/tree/main/src/inflearn_java_middle/generic), [김영한 중급 2편]()를 클릭해주세요.
 
