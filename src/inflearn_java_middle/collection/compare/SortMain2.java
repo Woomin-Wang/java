@@ -17,8 +17,6 @@ public class SortMain2 {
 
         Arrays.sort(array, new AscComparator().reversed()); // DescComparator와 같다.
         System.out.println("AscComparator.reversed: " + Arrays.toString(array));
-
-
     }
 
     static class AscComparator implements Comparator<Integer> {
