@@ -24,6 +24,7 @@
 > 10절. 수정할 수 없는 컬렉션
 
 <br/>
+<br>
 
 ## 1. 컬렉션 프레임워크 소개
 
@@ -62,14 +63,6 @@
 
 <br>
 
-### 컬렉션 인터페이스의 필요성
-- 일관성: 모든 컬렉션에서 공통된 방식으로 데이터를 처리할 수 있다.
-- 재사용성: 동일한 메서드를 다양한 컬렉션에 적용 가능하다.
-- 확장성: 새로운 컬렉션도 기존 도구와 함께 사용 가능하다.
-- 다형성: 다양한 컬렉션을 동일한 타입으로 다룰 수 있어 유연한 코드 작성이 가능하다.
-
-<br> 
-
 > 아래는 해당 인터페이스를 구현한 클래스들이다.
 
 |           **인터페이스 분류**          | **특징**                                                                                   | **대표 구현 클래스**                                                    |
@@ -80,7 +73,7 @@
 |            **Map 계열**           | - Key-Value 쌍으로 저장<br/>- Key는 중복 불가, Value는 중복 가능<br/>- `keySet()`은 Set처럼 작동 | `HashMap`, `LinkedHashMap`, `TreeMap`, `Hashtable`, `Properties` |
 
 <br/>
-
+<br>
 
 ## 2. List 컬렉션
 ### List 특징
@@ -129,7 +122,9 @@
 - 멀티 스레드가 동시에 이 메서드를 실행할 수 없다.
 	- 이를 스레드가 안전(Thread Safe)하다라고 말한다.
 
+
 <br/>
+<br>
 
 ## 3. Hash 알고리즘
 ### Hash 특징
@@ -160,6 +155,7 @@
 - 해시 충돌이 발생하면 같은 해시 인덱스의 Bucket에 선형 자료구조(주로 LinkedList)를 연결해서 데이터를 저장한다. 
 - LinkedList는 포인터 조작만으로 삽입과 삭제가 가능해 구조 변경 비용이 낮고, 배열 기반보다 충돌 처리에 더 효율적이다.
 
+<br>
 <br>
 
 ## 4. Set 컬렉션
@@ -214,6 +210,7 @@ while(iterator.hasNext()) { // 가져올 객체가 있는지 확인
 > 동일성(Identity): `==` 연산자를 사용해서 두 객체의 참조가 동일한 객체를 가리키고 있는지 확인한다.  
 > 동등성(Equality): `equals()` 메서드를 사용해서 두 객체가 논리적으로 같은 값을 가지는지 확인한다.
 
+<br>
 <br>
 
 **equals()가 사용되는 시점**
@@ -270,6 +267,7 @@ public boolean contains(Object searchValue) {
 - 정렬 기능은 없으며, 삽입한 순서대로만 요소를 순회할 수 있다.
 
 <br>
+<br>
 
 ## 5. Map 컬렉션
 ### Map 특징
@@ -312,6 +310,7 @@ public boolean contains(Object searchValue) {
 	- 프로퍼티 파일은 키와 값이 `=` 기호로 연결되어 있는 텍스트 파일이다.
 
 <br>
+<br>
 
 ## 6. 검색과 순회 기능을 강화시킨 컬렉션
 
@@ -345,9 +344,6 @@ public boolean contains(Object searchValue) {
 - `compare(T o1, T o2)` 메서드를 오버라이딩하여 두 객체를 비교 기준을 정한다.
 - `Collections.sort(list, comparator)`, `list.sort(comparator)`, `new TreeSet<>(comparator)` 등이 내부적으로 `compare()`를 사용한다.
 
-자바는 개발자가 복잡한 정렬 알고리즘을 신경 쓰지 않으면서 정렬의 기준만 간단히 변경할 수 있도록, 정렬릐 기준을 Comparable, Comparator 인터페이스를 통해 추상화해두었다.
-객체의 정렬이 필요한 경우 Comparable을 통해 기본 자연순서를 제공하고 자연 순선 외에 다른 정렬 기준이 추가로 필요하면 Comparator을 제공하자.
-  
 <br>
 
 ### Iterable
@@ -399,6 +395,7 @@ while (it.hasNext()) {
 >Iterable은 반복을 지원하는 객체임을 명시하며, Iterator를 통해 실제 요소에 순차적으로 접근할 수 있도록 한다. 이를 통해 **다양한 자료구조를 내부 구현과 관계없이 일관되고 통일된 방식으로 순회할 수 있다.**
 
 <br>
+<br>
 
 ## 7. LIFO와 FIFO 컬렉션
 
@@ -439,6 +436,7 @@ deque.poll();
 ```
 
 <br>
+<br>
 
 ## 8. 동기화된 컬렉션
 ### 개요
@@ -460,6 +458,7 @@ deque.poll();
 |Map<K, V> | synchronizedMap(Map<K, V> m) | Map을 동기화된 Map으로 리턴|
 |Set<T> | synchronizedSet(Set<T> s) | Set을 동기화된 Set으로 리턴|
 
+<br>
 <br>
 
 ## 9. 병렬 처리를 위한 컬렉션
@@ -490,6 +489,7 @@ Queue<E> queue = new ConcurrentLinkedQueue<E>();
 ```
  
 <br>
+<br>
 
 ## 10. 수정할 수 없는 컬렉션
 ### 개요
@@ -498,7 +498,7 @@ Queue<E> queue = new ConcurrentLinkedQueue<E>();
 
 <br>
 
-### List.of(), Set.of(), Map.of() - Java 9+
+### List.of(), Set.of(), Map.of()
 - 불변 컬렉션을 생성하는 정적 메서드이다.
 - `null` 요소를 허용하지 않고, 수정 시 UnsupportedOperationException 예외가 발생한다.
 
@@ -510,7 +510,7 @@ Map<String, Integer> map = Map.of("one", 1, "two", 2);
 
 <br>
 
-### copyOf() - Java 10+
+### copyOf() 
 - 기존 컬렉션을 기반으로 불변 복사본을 생성한다.
 - 원본이 변경되어도 복사본은 영향을 받지 않는다.
 
