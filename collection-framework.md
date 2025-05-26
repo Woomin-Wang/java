@@ -538,5 +538,5 @@ list.add("D");            // X (UnsupportedOperationException)
 <br>
 
 ## 마무리
-글을 간략하게 작성하다보니 생략된 코드들이 있으니, 자세히 보려면 [이것이 자바다](https://github.com/Woomin-Wang/java/tree/main/src/inflearn_java_middle/generic), [김영한 중급 2편]()를 클릭해주세요.
+글을 간략하게 작성하다보니 생략된 코드들이 있으니, 자세히 보려면 [이것이 자바다](https://github.com/Woomin-Wang/java/tree/main/src/this_is_java/ch15), [김영한 중급 2편](https://github.com/Woomin-Wang/java/tree/main/src/inflearn_java_middle/collection)를 클릭해주세요.
 
