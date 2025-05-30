@@ -1,4 +1,4 @@
-    package inflearn_java_advanced1.thread.control.printer;
+package inflearn_java_advanced1.thread.control.printer;
 
 import java.util.Queue;
 import java.util.Scanner;
