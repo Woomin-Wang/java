@@ -4,6 +4,7 @@ import static inflearn_java_advanced1.util.MyLogger.log;
 import static inflearn_java_advanced1.util.ThreadUtils.sleep;
 
 public class BankAccountV1 implements BankAccount {
+
     private int balance;
 
     public BankAccountV1(int initialBalance) {
