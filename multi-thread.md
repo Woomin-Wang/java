@@ -24,6 +24,7 @@ Thread를 학습하기 전에 다음과 같은 운영체제 개념들을 먼저 
 > 5절. 동기화 기본
 > - synchronized 키워드 사용법과 특징
 > - LockSupport
+> - 공정성과 비공정성
 > 
 > 6절. CAS와 원자적 연산
 > - CAS(Compare-And-Swap)의 원리
@@ -211,6 +212,7 @@ interrupt
 <br>
 
 ### volatile 키워드 사용
+
 - 변수에 `volatile`을 선언하면, 해당 변수는 **모든 스레드가 메인 메모리를 통해 접근**
 
 ```java
@@ -257,8 +259,7 @@ public class VolatileExample {
 
 ## 5. 동기화 기본
 
-앞서 volatile 키워드로 **메모리 가시성 문제**는 해결할 수 있지만, **원자성 문제**는 여전히 남아 있습니다.
-
+앞서 volatile 키워드로 **메모리 가시성 문제**는 해결할 수 있지만, **원자성 문제**는 여전히 남아 있습니다.  
 여러 스레드가 동시에 공유 자원에 접근하는 경우, 데이터 일관성을 보장하려면 **동기화**(synchronization)가 필요합니다.
 
 자바는 이를 위해 대표적으로 두 가지 방식의 동기화를 제공합니다:
@@ -322,9 +323,9 @@ public void increment() {
 
 ### LockSupport
 
-synchronized를 사용할 때, 임계 영역에 진입하지 못한 스레드는 BLOCKED 상태가 되며, BLOCKED 상태는 다른 스레드의 인터럽트로 깨울 수 없어 무한 대기 상태에 빠질 수 있습니다.
+synchronized 사용 시, 임계 영역 대기 스레드는 BLOCKED 상태가 되어 인터럽트로 깨우기 어렵고 무한 대기 가능성이 있습니다.
 
-반면, **LockSupport**는 이러한 무한 대기 문제를 해결하기 위해, 대기 중인 스레드를 **BLOCKED** 대신 **WAITING** 상태로 전환시킵니다.
+반면 LockSupport는 스레드를 WAITING 상태로 만들어 인터럽트에 반응할 수 있게 합니다.
 
 - **park()**
     - 현재 스레드를 **WAITING 상태**로 전환하여 무기한 대기시킵니다.
@@ -378,11 +379,53 @@ public class LockSupportMainV1 {
 
 ### ReentrantLock
 
-Lock 인터페이스 구현체 중 하나로, 멀티 스레딩 환경에서 임계 구역을 위한 lock을 구현하는 데 사용된다. ReentrantLock 객체에서 사용하는 락은 synchronized에서 사용되는 객체 내부의 모니터락이 아닌, ReentrantLock이 제공하는 lock이다.
+Lock 인터페이스의 구현체 중 하나로, 멀티스레딩 환경에서 임계 구역을 보호하기 위해 사용됩니다.
 
+ReentrantLock이 사용하는 락은 synchronized가 사용하는 **객체 내부의 모니터 락과 달리, ReentrantLock 자체가 제공하는 별도의 락입니다.**
 
-- ReentrantLock은 Lock 인터페이스를 구현한 대표적인 클래스입니다.
-- **명시적으로 락을 획득(`lock()`)하고 해제(`unlock()`)** 해야 합니다.
+<br>
+
+**Lock 인터페이스**
+```java
+public interface Lock {
+    void lock();
+    void lockInterruptibly() throws InterruptedException;
+    boolean tryLock();
+    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
+    void unlock();
+    Condition newCondition();
+}
+```
+> Lock 인터페이스는 동시성 프로그래밍에서 쓰이는 안전한 임계 영역을 위한 락을 구현하는데 사용됩니다.
+
+<br>
+
+- **lock()**
+    - 임계 영역 접근하기 위한 락을 획득하는 메서드이다.
+    - 다른 스레드가 이미 락을 보유 중이면, 현재 스레드는 락을 얻을 때까지 WAITING 상태가 된다.
+    - WAITING 상태임에도 인터럽트에 응하지 않는다.
+        - 정확히는 인터럽트 발생 시 잠깐 WAITING → RUNNABLE 상태가 되지만, 곧 다시 강제로 WAITING 상태로 전환된다.
+
+- **lockInterruptibly()**
+    - `lock()`과 동일하게 락을 얻기 위해 사용하되, 다른 스레드에 의해 인터럽트 될 수 있다.
+    - 인터럽트가 발생하면 InterruptedException 예외가 발생한다.
+
+- **tryLock()**
+    - 락 획득을 시도하고, 락 획득 여부를 즉시 반환한다.
+    - 다른 스레드가 락을 가지고 있다면 false를 반환하고, 현재 스레드가 락을 획득한 경우 true를 반환한다.
+
+- **tryLock(long time, TimeUnit unit)**
+    - 락을 획득하기 위해 사용하되, 현재 스레드가 락을 갖지 못한 경우 time 동안 TIMED_WAITING 상태로 대기하고,
+    - time동안 락을 얻지 못하면 false를 반환한다.
+    - 또한 time동안 대기하는 동안 다른 스레드에 의해 interrupt 될 수 있다. 이때, InterruptedException 예외가 발생한다.
+
+- **unlock()**
+    - 현재 스레드가 가지고 있는 락을 반환한다.
+    - 임계 영역에 접근하기 위해 대기 중인 스레드가 있다면 그중에 한 스레드가 락을 획득할 수 있다.
+    - `lock()`을 통해 락을 얻은 경우, 사용 완료 후 반드시 `unlock()`을 호출해야 한다.
+        - 호출하지 않으면 대기 중인 스레드가 락을 얻지 못하고 대기 상태를 유지하게 된다.
+
+<br>
 
 ```java
 public class Counter {
@@ -408,55 +451,24 @@ public class Counter {
 
 <br>
 
+### 공정성과 비공정성
 
+락을 얻지 못해 대기 중인 스레드가 있을 때, 락이 해제되면 어떤 스레드가 락을 획득할지는 보장되지 않습니다.  
+공정성이랑 락을 얻을 기회가 생겼을 때, 대기 중인 스레드들이 공평하게 락을 획득할 수 있도록 보장하는 것을 의미합니다.
 
+ReentrantLock은 이러한 공정성 모드와 비공정성 모드를 지원합니다.
 
-
-tryLock()
-- 락을 즉시 획득할 수 있으면 true 반환 아니면 false 반환
-- 대기 없이 락을 얻으려고 시도하고 실패하면 바로 돌아오므로 무한 대기하지 않음
 
 ```java
-Lock lock = new ReentrantLock();
+// 비공정 모드 락
+private final Lock nonFairLock = new ReentrantLock();
 
-if (lock.tryLock()) {
-    try {
-        // 임계 구역 수행
-    } finally {
-        lock.unlock();
-    }
-} else {
-    // 락을 얻지 못했을 때 처리할 코드
-}
+// 공정 모드 락
+private final Lock fairLock = new ReentrantLock(true);
 ```
 
-tryLock(long timeout, TimeUnit unit)
-
-- 지정한 시간만큼 락을 기다리고, 그 시간 내에 락을 얻으면 true, 실패하면 false 반환
-
-- 중간에 인터럽트 발생 시 InterruptedException 예외 발생
-
-
-> 왜 `tryLock()`을 사용하는가?
-> - 무한 대기 없이 락 획득을 시도하고 싶을 때
-> - 데드락 방지에 도움
-> - 락 획득 실패 시 다른 작업을 수행하는 등 유연한 처리 가능
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+공정 모드는 대기 큐에 있는 스레드에게 락 획득 기회를 순차적으로 부여하기 때문에, 특정 스레드가 오랫동안 락을 얻지 못하는 **기아 현상**을 줄일 수 있습니다.  
+반면, 비공정 모드는 락을 빠르게 획득할 수 있어 성능이 좋지만, 공정성이 떨어집니다.
 
 <br>
 <br>
