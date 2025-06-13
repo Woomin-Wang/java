@@ -8,10 +8,10 @@ Thread를 학습하기 전에 다음과 같은 운영체제 개념들을 먼저 
 <br/>
 
 > 1절. 동시성, 병렬성
+> - 동시성과 병렬성의 차이와 기본 개념 이해
 >
-> 2절. 스레드 생성과 실행
+> 2절. 스레드 생성
 > - 스레드 생성 방법(Thread 클래스, Runnable, Callable)
-> - 스레드 시작과 실행 흐름
 >   
 > 3절. 스레드 생명 주기와 제어
 > - 스레드 상태와 전이
@@ -44,11 +44,12 @@ Thread를 학습하기 전에 다음과 같은 운영체제 개념들을 먼저 
 <br>
 <br>
 
-## 동시성(Concurrency), 병렬성(Parallelism)
+## 1. 동시성(Concurrency), 병렬성(Parallelism)
 
-멀티 스레드 환경에서는 동시성 또는 병렬성으로 실행된다.
+멀티 스레드 환경에서는 동시성 또는 병렬성으로 실행됩니다.
 
 **병렬성(Parallelism)**
+- 여러 CPU 코어가 각각 독립적인 작업을 동시에 수행하는 방식
 
 ```java
 CPU 1: A ------------------------->
@@ -56,40 +57,115 @@ CPU 1: A ------------------------->
 CPU 2: B ------------------------->
 ```
 
+<br>
+
 **동시성(Concurrency)**
+- 단일 CPU 코어가 여러 작업을 번갈아가며 수행하는 방식
 
 ```java
 CPU 1: A -----------> B ----------> A -----------> B ---------->
 ```
 
-동시성은 스레드 스케줄링에 따라 실행 순서가 결정된다. 스레드들은 매우 짧은 시간 단위로 번갈아가며 자신의 작업(`run()`)를 조금씩 실행한다.
+<br>
 
+> 즉, 동시성은 '겹쳐서' 실행하는 개념이고, 병렬성은 '완전히 동시에' 실행한느 개념입니다.
 
 <br>
 <br>
 
-## Runnable, Callable
+## 2. 스레드 생성
+
+Jav에서 스레드 생성 방법은 크게 세 가지입니다:
+
+<br>
+
+**1. Thread 클래스 상속**
+
+```java
+public class ThreadByExtends extends Thread {
+    @Override
+    public void run() {
+        // 실행할 코드 작성
+    }
+}
+```
+
+<br>
+
+**2. Runnable 인터페이스 구현**
+
+```java
+public class ThreadByRunnable implements Runnable {
+    @Override
+    public void run() {
+        // 실행할 코드 작성
+    }
+}
+```
+Runnable 인터페이스 구현 후 Thread 생성자에 전달합니다.
+
+<br>
+
+**3. Callable 인터페이스 구현**
+
+```java
+import java.util.concurrent.Callable;
+
+public class ThreadByCallable implements Callable<V> { // V는 반환 타입 (예: String, Integer 등)
+    @Override
+    public V call() throws Exception {
+        // 실행할 코드 작성 및 결과 반환
+        return null; // 또는 실제 결과
+    }
+}
+```
 
 Callable은 Runnable의 단점을 보완하기 위해 만들어졌다.
 
-```java
-public interface Runnable {
-    public void run();
-}
-```
-
-```java
-public interface Callable<V> {
-    V call() throws Exception
-}
-```
-
-`run()` 메서드는 결과 값을 리턴하지 않기 때문에, 실행 결과를 얻으려변 공용 메모리나 파이프 같은 방식을 사용해야 했다.
+작업 수행 후 결과를 반환할 수 있으며, 체크 예외를 던질 수 있어 예외 처리와 결과값이 필요한 비동기 작업에 적합하다.
 
 <br>
 <br>
 
-## Future
+## 3. 스레드 생명 주기와 제어
+
+
+
+
+
+
+<br>
+<br>
+
+
+## 4. 메모리 가시성 문제와 해결
+
+<br>
+<br>
+
+## 5. 동기화 기본
+
+<br>
+<br>
+
+## 6. CAS와 원자적 연산
+
+<br>
+<br>
+
+## 7. 동시성 컬렉션
+
+<br>
+<br>
+
+## 8. 생산자-소비자 문제와 스레드 간 협력
+
+<br>
+<br>
+
+## 9. 스레드풀과 작업 관리
+
+### Future
 
 Future는 비동기 작업의 결과를 나중에 받아올 수 있도록 하는 인터페이스이다.
 
