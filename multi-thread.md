@@ -48,6 +48,8 @@ Thread를 학습하기 전에 다음과 같은 운영체제 개념들을 먼저 
 
 멀티 스레드 환경에서는 동시성 또는 병렬성으로 실행됩니다.
 
+<br>
+
 **병렬성(Parallelism)**
 - 여러 CPU 코어가 각각 독립적인 작업을 동시에 수행하는 방식
 
@@ -68,14 +70,14 @@ CPU 1: A -----------> B ----------> A -----------> B ---------->
 
 <br>
 
-> 즉, 동시성은 '겹쳐서' 실행하는 개념이고, 병렬성은 '완전히 동시에' 실행한느 개념입니다.
+> 즉, 동시성은 '겹쳐서' 실행하는 개념이고, 병렬성은 '완전히 동시에' 실행하는 개념입니다.
 
 <br>
 <br>
 
 ## 2. 스레드 생성
 
-Jav에서 스레드 생성 방법은 크게 세 가지입니다:
+Java에서 스레드 생성 방법은 크게 세 가지입니다:
 
 <br>
 
@@ -125,14 +127,66 @@ Callable은 Runnable의 단점을 보완하기 위해 만들어졌다.
 작업 수행 후 결과를 반환할 수 있으며, 체크 예외를 던질 수 있어 예외 처리와 결과값이 필요한 비동기 작업에 적합하다.
 
 <br>
+
+> **start()**
+> - 새로운 스레드를 만들고 실행을 시작하는 메서드입니다. start()를 호출해야 새로운 스레드가 생성되고 그 안에서 run()이 실행됩니다.
+> 
+> **run()**
+> - 스레드가 실행할 작업 내영을 담은 메서드입니다. 직접 호출하면 현재 스레드에서 동기적으로 실행되고, start()가 내부에서 호출해 별도의 스레드에서 실행되도록 합니다.
+> 
+> **call()**
+> - Callable 인터페이스의 메서드로, 작업 수행 후 결과를 반환할 수 있고 예외 처리도 가능한 메서드입니다. 주로 ExecutorService와 함께 사용되어 비동기 작업을 처리합니다.
+
+<br>
 <br>
 
 ## 3. 스레드 생명 주기와 제어
 
+자바 스레드의 생명 주기는 여러 상태로 나뉘어지며, 각 상태는 스레드가 실행되고 종료되기까지의 과정을 나타낸다.
 
+<br>
 
+![image](https://github.com/user-attachments/assets/25394abb-5e6b-427b-8e24-dedf748a3b6f)
 
+**New (새로운 상태)**
+- 스레드가 생성되었으나 **아직 실행되지 않은 상태**
+      
+<br>
 
+**Runnable (실행 가능 상태)**
+- 스레드가 **실행 준비가 완료된 상태**로, 이미 실행 중이거나 CPU 할당을 기다리는 상태
+- 멀티스레드 환경에서는 각 스레드가 번갈아 가며 CPU를 사용하기 때문에, 실행 중이거나 대기 중인 모든 스레드는 Runnable 상태로 존재
+    
+<br>
+  
+**Bloked/Waiting (차단 상태/대기 상태)**
+- 스레드가 **특정 조건이나 자원(락, I/O, 다른 스레드 작업 완료 등)을 기다리며 일시 정지된 상태**
+    - **Blocked**: 락이 해제되기를 기다리는 상태 → 락이 풀리면 Runnable로 전환
+    - **Waiting**: 무기한으로 다른 스레드 작업 완료를 기다리는 상태 (`wait()`, `join()` 호출 시 진입)
+
+> 이 상태의 스레드는 **CPU 시간을 소비하지 않으며**, 스레드 스케줄러가 다시 실행 가능한 상태로 전환시킴
+     
+<br>
+ 
+**Timed Waiting (시간 제한 대기 상태)**
+- 스레드가 일정 시간 동안 다른 스레드의 작업을 기다리는 상태
+- `sleep()`, wait(int timeout)`, join(long millis)` 등 시간 제한이 있는 대기 메서드 호출 시 진입
+- 타임아웃 또는 `notify()` 알림을 받으면 Runnable 상태로 전환
+      
+<br>
+
+**Terminated (종료 상태)**
+- 스레드가 정상적으로 실행을 마쳤거나, 처리되지 않은 예외 등 비정상적 종료로 실행이 끝난 상태
+
+<br>
+
+### 스레드 제어 메서드
+
+sleep 
+
+join
+
+interrupt
 
 <br>
 <br>
@@ -140,15 +194,79 @@ Callable은 Runnable의 단점을 보완하기 위해 만들어졌다.
 
 ## 4. 메모리 가시성 문제와 해결
 
+멀티스레드 환경에서는 **한 스레드가 변경한 변수 값이 다른 스레드에게 보이지 않는 문제** 즉, **메모리 가시성 문제**가 발생할 수 있다.
+
+자바는 성능 최적화를 위해 **CPU 캐시**와 **메인 메모리 간의 불일치**가 허용되며, 이로 인해 다음과 같은 문제가 발생할 수 있다.
+
+### 메모리 가시성(visibillity)
+- 하나의 스레드가 변수 값을 변경했지만, **다른 스레드는 여전히 이전 값을 읽는 현상**
+
+![image](https://github.com/user-attachments/assets/273d3493-c594-415d-843f-9ea255730fb2)
+
+> 🔎 왜 발생하는가?
+> - 각 스레드는 **자신만의 CPU 캐시**를 사용할 수 있음
+> - 변수의 최신 값이 **메인 메모리에 즉시 반영되지 않거나, 다른 스레드가 반영된 값을 읽지 않아서 발생**
+
+<br>
+<br>
+
+### volatile 키워드 사용
+- 변수에 `volatile`을 선언하면, 해당 변수는 **모든 스레드가 메인 메모리를 통해 접근**
+
+```java
+public class VolatileExample {
+
+    private static volatile boolean running = true;
+
+    public static void main(String[] args) throws InterruptedException {
+
+        Thread worker = new Thread(() -> {
+            System.out.println("스레드 시작");
+
+            while (running) {
+                // busy-wait
+            }
+
+            System.out.println("스레드 종료");
+        });
+
+        worker.start();
+
+        // 1초 후 종료 신호
+        Thread.sleep(1000);
+        running = false;
+
+        worker.join(); // 스레드가 끝날 때까지 대기
+        System.out.println("메인 종료");
+    }
+}
+```
+
+이 예제에서 volatile 키워드 덕분에, `runnung = false` 변경이 **즉시 다른 스레드에게 반영**되어 루프가 정상적으로 종료됩니다.
+
+<br>
+
+> volatile은 **가시성 문제를 해결**하지만, **원자성 문제는 해결하지 못한다.**
+>
+> 가시성과 원자성 모두 해결하려면 **synchronized, Lock, CAS(Compare-And-Swap)** 같은 기법을 사용해야 한다.
+>
+> 이러한 원자성 문제의 해결책은 6절에서 자세히 다룬다.
+
 <br>
 <br>
 
 ## 5. 동기화 기본
 
+![image](https://github.com/user-attachments/assets/81a0b48c-6ce4-4a75-95dd-9c3c47a4c6b8)
+
+
 <br>
 <br>
 
 ## 6. CAS와 원자적 연산
+
+![image](https://github.com/user-attachments/assets/1dddc5a6-50f7-4aac-a86d-9181103afd24)
+
 
 <br>
 <br>
