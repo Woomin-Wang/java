@@ -23,7 +23,7 @@ Thread를 학습하기 전에 다음과 같은 운영체제 개념들을 먼저 
 >
 > 5절. 동기화 기본
 > - synchronized 키워드 사용법과 특징
-> - java.util.concurrent.Lock 인터페이스
+> - LockSupport
 > 
 > 6절. CAS와 원자적 연산
 > - CAS(Compare-And-Swap)의 원리
@@ -250,14 +250,212 @@ public class VolatileExample {
 >
 > 가시성과 원자성 모두 해결하려면 **synchronized, Lock, CAS(Compare-And-Swap)** 같은 기법을 사용해야 한다.
 >
-> 이러한 원자성 문제의 해결책은 6절에서 자세히 다룬다.
+> 이러한 원자성 문제의 해결책은 5,6절에서 자세히 다룬다.
 
 <br>
 <br>
 
 ## 5. 동기화 기본
 
+앞서 volatile 키워드로 **메모리 가시성 문제**는 해결할 수 있지만, **원자성 문제**는 여전히 남아 있습니다.
+
+여러 스레드가 동시에 공유 자원에 접근하는 경우, 데이터 일관성을 보장하려면 **동기화**(synchronization)가 필요합니다.
+
+자바는 이를 위해 대표적으로 두 가지 방식의 동기화를 제공합니다:
+
+<br>
+
+### synchronized 키워드
+
+- synchronized는 **한 번에 하나의 스레드만 임계 구역(Critical section)을 실행**하도록 보장하여, **경쟁 상태(Race Condition)를 방지**합니다.
+
 ![image](https://github.com/user-attachments/assets/81a0b48c-6ce4-4a75-95dd-9c3c47a4c6b8)
+
+**동기화 메서드**
+
+```java
+public class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++; // 임계 구역
+    }
+
+    public synchronized int getCount() {
+        return count; // 임계 구역
+    }
+}
+```
+
+<br>
+
+**동기화 블록**
+
+```java
+public void increment() {
+    synchronized (this) {
+        count++; // 임계 구역
+    }
+}
+```
+
+블록 단위로 지정하면 **보다 정밀하게 동기화 범위를 제어**할 수 있어 성능 최적화에 유리합니다.
+
+<br>
+
+**synchronized의 한계**
+
+- **무한대기**
+    - synchronized를 사용하면 **락을 가진 스레드가 작업을 끝낼 때까지 다른 스레드는 무조건 대기**해야 합니다.
+    - 락을 기다리는 동안 **타임아웃 설정 불가, 인터럽트로 중단 불가**하여 유연한 제어가 어렵습니다.
+      
+- **공정성 문제**
+    - 락이 해제된 뒤 **어떤 스레드가 락을 얻을지 보장하지 않습니다. 
+    - 스레드 스케줄링에 따라 **특정 스레드가 계속 기회를 못 얻는 기아 상태 현상이 발생**할 수 있습니다.
+
+<br>
+
+> 더 유연하고 세밀한 동기화 제어가 필요해지면서, Java 1.5부터 동시성 문제 해결을 위한 java.util.concurrent 패키지가 추가되었습니다.
+
+<br>
+<br>
+
+### LockSupport
+
+synchronized를 사용할 때, 임계 영역에 진입하지 못한 스레드는 BLOCKED 상태가 되며, BLOCKED 상태는 다른 스레드의 인터럽트로 깨울 수 없어 무한 대기 상태에 빠질 수 있습니다.
+
+반면, **LockSupport**는 이러한 무한 대기 문제를 해결하기 위해, 대기 중인 스레드를 **BLOCKED** 대신 **WAITING** 상태로 전환시킵니다.
+
+- **park()**
+    - 현재 스레드를 **WAITING 상태**로 전환하여 무기한 대기시킵니다.
+      
+- **parkNanos(long nanos)** 
+    - 지정 시간 동안 TIMED_WAITING 상태로 대기시킵니다.
+    - 시간이 지나면 자동으로 RUNNABLE 상태가 됩니다.
+      
+- **unpark(Thread thread)** 
+    - 지정 스레드를 WAITING 상태에서 RUNNABLE 상태로 전환시켜 깨웁니다.
+    - 이 메서드는 다른 스레드가 호출해야 하며, 대기 중인 스레드 자신이 호출할 수 없습니다.
+
+<br>
+  
+```java
+public class LockSupportMainV1 {
+
+    public static void main(String[] args) {
+
+        Thread thread1 = new Thread(new ParkTask(), "Thread-1");
+        thread1.start(); // 스레드 시작 -> park()에서 대기 상태로 진입
+
+        sleep(100); // 잠시 대기하여 thread1이 park 상태에 들어가도록 함
+        log("Thread-1 state: " + thread1.getState()); // 스레드 상태 출력 (WAITING 예상)
+
+        log("main -> unpark(Thread-1)");
+        LockSupport.unpark(thread1); // 대기 중인 스레드 깨우기
+//        thread1.interrupt(); // 인터럽트로도 깨울 수 있음 (주석 처리됨)
+    }
+
+    static class ParkTask implements Runnable {
+
+        @Override
+        public void run() {
+            log("park 시작");
+            LockSupport.park(); // 스레드를 WAITING 상태로 대기시킴
+            log("park 종료, state: " + Thread.currentThread().getState()); // 깨어난 후 상태 출력
+            log("인터럽트 상태: " + Thread.currentThread().isInterrupted()); // 인터럽트 여부 출력
+        }
+    }
+}
+```
+
+`park()`는 스레드를 대기 상태로 만들고, `unpark()`가 호출되면 깨어납니다. 인터럽트 발생 시에도 깨어나며, 인터럽트 플래그가 ture가 됩니다.
+
+<br>
+
+> LockSupport는 저수준이라 직접 쓰기 어렵지만, 자바의 Lock 인터페이스와 ReentrantLock이 이를 활용해 synchronized의 단점을 보완하며 편리한 동기화 기능을 제공합니다.
+
+<br>
+
+### ReentrantLock
+
+Lock 인터페이스 구현체 중 하나로, 멀티 스레딩 환경에서 임계 구역을 위한 lock을 구현하는 데 사용된다. ReentrantLock 객체에서 사용하는 락은 synchronized에서 사용되는 객체 내부의 모니터락이 아닌, ReentrantLock이 제공하는 lock이다.
+
+
+- ReentrantLock은 Lock 인터페이스를 구현한 대표적인 클래스입니다.
+- **명시적으로 락을 획득(`lock()`)하고 해제(`unlock()`)** 해야 합니다.
+
+```java
+public class Counter {
+    private int count = 0;
+    private final Lock lock = new ReentrantLock();
+
+    public void increment() {
+        lock.lock();
+        try {
+            count++; // 임계 구역
+        } finally {
+            lock.unlock(); // 반드시 해제해야 deadlock 방지 가능
+        }
+    }
+}
+```
+ 
+<br>
+ 
+> **데드락(Deadlock)**
+> - 두 개 이상의 스레드가 **서로 자원이 풀리기를 기다리며 무한 대기 상태에 빠지는 현상**입니다.
+> - 특히, Lock을 사용할 때 `unlock()`을 호출하지 않으면 데드락이 발생할 수 있으므로, 반드시 try-finally 블록을 사용해 락을 해제해야 합니다.
+
+<br>
+
+
+
+
+
+tryLock()
+- 락을 즉시 획득할 수 있으면 true 반환 아니면 false 반환
+- 대기 없이 락을 얻으려고 시도하고 실패하면 바로 돌아오므로 무한 대기하지 않음
+
+```java
+Lock lock = new ReentrantLock();
+
+if (lock.tryLock()) {
+    try {
+        // 임계 구역 수행
+    } finally {
+        lock.unlock();
+    }
+} else {
+    // 락을 얻지 못했을 때 처리할 코드
+}
+```
+
+tryLock(long timeout, TimeUnit unit)
+
+- 지정한 시간만큼 락을 기다리고, 그 시간 내에 락을 얻으면 true, 실패하면 false 반환
+
+- 중간에 인터럽트 발생 시 InterruptedException 예외 발생
+
+
+> 왜 `tryLock()`을 사용하는가?
+> - 무한 대기 없이 락 획득을 시도하고 싶을 때
+> - 데드락 방지에 도움
+> - 락 획득 실패 시 다른 작업을 수행하는 등 유연한 처리 가능
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <br>
