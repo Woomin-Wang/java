@@ -137,11 +137,12 @@ Callable은 Runnable의 단점을 보완하기 위해 만들어졌다.
 
 ### 스레드 제어 메서드
 
-sleep 
+- sleep(long millis)
+- 
 
-join
+- join
 
-interrupt
+- interrupt
 
 
 
