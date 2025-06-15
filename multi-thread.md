@@ -137,14 +137,43 @@ Callable은 Runnable의 단점을 보완하기 위해 만들어졌다.
 
 ### 스레드 제어 메서드
 
-- sleep(long millis)
-- 
+**sleep(long millis)**
+- 현재 실행 중인 스레드를 지정된 시간동안 TIMED_WAITING 상태로 전환
+- 대기 시간동안 **CPU 자원을 사용하지 않고** 정해진 시간이 지나면 자동으로 RUNNABLE 상태로 전환
+- `InterruptedException` 체크 예외를 발생시켜, `try-catch`로 처리해야 한다.
+- 다른 스레드이에 영향을 주지 않는다 → `sleep()`을 호출한 스레드만 멈춘다.
+- main 스레드는 다른 스레드를 실행만 시켜두고 **자신만의 흐름을 독립적으로 진행 가능**
 
-- join
+<br>
+
+**join()** : 호출 스레드는 대상 스레드가 완료될 때 까지 무한정 대기
+
+**join(long millis)** 최대 ms 밀리초까지 대기 후 RUNNABLE 상태로 복귀
+
+
+```java
+Thread thread1 = new Thread(() -> {
+    // 1~50까지 합 계산
+});
+Thread thread2 = new Thread(() -> {
+    // 51~100까지 합 계산
+});
+thread1.start();
+thread2.start();
+
+thread1.join(); // Thread-1 종료까지 대기
+thread2.join(); // Thread-2 종료까지 대기
+// 두 스레드 모두 종료된 후 main 스레드는 결과 출력
+```
+
+Thread-1, Thread-2가 각각 계산한 결과값을 main 스레드에서 기다리는 상황이며,  
+
+thread1.join()으로 대기 중인 동안 thread2가 먼저 종료되었더라도 thread2.join()은 즉시 통과된다.
+
 
 - interrupt
 
-
+- yield()
 
 
 
