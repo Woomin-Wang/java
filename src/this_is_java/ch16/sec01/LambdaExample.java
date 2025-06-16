@@ -2,6 +2,7 @@ package this_is_java.ch16.sec01;
 
 public class LambdaExample {
     public static void main(String[] args) {
+
         action((x, y) -> {
             int result = x + y;
             System.out.println("result = " + result);

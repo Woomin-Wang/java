@@ -1,6 +1,7 @@
 package inflearn_java_advanced1.thread.sync.lock;
 
 import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static inflearn_java_advanced1.util.MyLogger.log;
 import static inflearn_java_advanced1.util.ThreadUtils.sleep;
@@ -8,7 +9,7 @@ import static inflearn_java_advanced1.util.ThreadUtils.sleep;
 public class LockSupportMainV1 {
 
     public static void main(String[] args) {
-
+        
         Thread thread1 = new Thread(new ParkTask(), "Thread-1");
         thread1.start();
 
@@ -16,8 +17,8 @@ public class LockSupportMainV1 {
         log("Thread-1 state: " + thread1.getState());
 
         log("main -> unpark(Thread-1)");
-//        LockSupport.unpark(thread1);
-        thread1.interrupt();
+        LockSupport.unpark(thread1);
+//        thread1.interrupt();
     }
 
     static class ParkTask implements Runnable {
