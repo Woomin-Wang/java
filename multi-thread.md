@@ -550,14 +550,119 @@ private final Lock nonFairLock = new ReentrantLock();
 // 공정 모드 락
 private final Lock fairLock = new ReentrantLock(true);
 ```
-> 비공정 모드는 성능은 우수하지만, 특정 스레드가 계속 락을 독점할 수 있다. 반면, 공정 모드는 기아 현상을 줄이지만 성능 저하가 발생할 수 있다.
+> 비공정 모드는 성능은 우수하지만, 특정 스레드가 계속 락을 독점할 수 있다.
+> 
+> 반면, 공정 모드는 기아 현상을 줄이지만 성능 저하가 발생할 수 있다.
 
 <br>
 <br>
 
 ## 6. CAS와 원자적 연산
 
-![image](https://github.com/user-attachments/assets/1dddc5a6-50f7-4aac-a86d-9181103afd24)
+멀티스레드 환경에서 여러 스레드가 공유 자원에 동시에 접근하여 데이터를 변경할 때, 예상치 못한 문제가 발생할 수 있다.
+이를 해결하기 위해 **동기화 기법**이 필요하며, 대표적으로 **synchronized 키워드**나 **Lock 인터페이스**를 사용한다.
+
+하지만, 이러한 방법들은 스레드를 **블로킹** 시키는 방식으로 동작하여 성능 저하를 야기할 수 있다.
+
+CAS는 이러한 블로킹 방식의 대안으로 등장한 **낙관적(Optimistic) 락킹 기법**이자 **하드웨어 수준에서 지원하는 원자적 연산**이다.
+
+<br>
+
+### CAS (Compare-And-Swap)
+
+CAS는 이름 그래도 비교하고(Compare) 교체하는(Swap) 연산을 원자적으로 수행하는 기술이다.  
+즉, 이 연산은 중단될 수 없는 단일 작업으로 처리된다.
+
+CAS 연산은 다음 세 가지 피연산자를 사용한다:
+
+- **V(Value)**: 현재 메모리에 있는 값 (읽어온 값)
+- **A(Expected Value / Anticipated Value):** 현재 스레드가 예상하는 값 (내가 읽어왔던 값)
+- **B(New Value):** 새로 갱신하려는 값
+
+<br>
+
+**CAS의 동작 방식:**
+
+1. 스레드는 메모리 위치 V의 값을 읽어온다. (이것이 A가 된다)
+2. 스레드는 이 값을 기반으로 어떤 계산을 수행하여 새로운 값 B를 준비한다.
+3. 스레드는 메모리의 위치 V의 현재 값(V)이 자신이 읽어왔떤 값(A)과 **동일한지 비교**한다.
+4. 만약 동일하다면 (**비교 성공**), 메모리 위치 V의 값을 새로운 값(B)으로 **원자적으로 교체**한다.
+5. 만약 동일하지 않다면 (**비교 실패**), 다른 스레드가 그 사이에 값을 변경했다는 의미이므로, 교체하지 않고 연산에 실패했음을 알린다.
+   - 이 경우, 일반적으로 스레드는 연산을 다시 시도한다. (다시 값을 읽고, 비교하고, 교체하는 과정을 반복).
+
+<br>
+
+### 원자적 연산 (Atomic Operations)
+
+원자적 연산이란 더 이상 쪼갤 수 없는, 즉 중간에 다른 스레드에 의해 방해받지 않고 **완전히 수행되거나 전혀 수행되지 않는 작업 단위**를 의미한다.
+
+- **CAS는 대표적인 원자적 연산 중 하나이다.** 비교와 교체라는 두 단계가 **하드웨어 수준에서 단일 명령어로 실행**되도록 설계되었다.
+    - 이 덕분에 여러 스레드가 동시에 CAS 연산을 시도해도 문제가 발생하지 않는다.
+- 자바에서는 `java.util.concurrent.atomic` 패키지를 통해 이러한 원자적 연산을 지원한다.
+    - 이 패키지의 클래스들(예: AtomicInteger, AtomicLong)은 내부적으로 CAS 연산을 활용하여 락 없이도 Thread-safe 한 작업을 제공한다.
+
+<br>
+
+**CAS의 활용 예시 (Java Atomic 클래스)**
+```java
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class AtomicCounter {
+    private AtomicInteger count = new AtomicInteger(0);
+
+    public void increment() {
+        // count.incrementAndGet()은 내부적으로 CAS를 사용하여 원자적으로 증가
+        // 이는 count++ (원자적이지 않음)와 다르다.
+        count.incrementAndGet(); 
+    }
+
+    public int getCount() {
+        return count.get();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        AtomicCounter counter = new AtomicCounter();
+        
+        Runnable task = () -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        };
+
+        Thread t1 = new Thread(task);
+        Thread t2 = new Thread(task);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        // 락을 사용하지 않았음에도 불구하고, 정확히 2000이 출력
+        System.out.println("Final count: " + counter.getCount()); 
+    }
+}
+```
+
+> 동기화 설정(예: synchronized 키워드나 ReentrantLock 인스턴스 사용)을 하지 않았음에도, 멀티스레드 환경에서 동시성 문제가 해결됐다.
+>
+> AtomicInteger 클래스와 그 내부의 `incrementAndGet()` 메서드가 **CAS(Compare-And-Swap) 연산을 사용하여 원자적으로 동작**하기 때문이다.
+
+ 
+<br>
+
+**CAS의 장점과 단점**
+
+**장점:**
+- Non-Blocking
+- 성능
+
+<br>
+
+**단점:**
+- ABA 문제
+- 스핀 락(Sping Lock) 오버헤드
+- 복잡성
 
 
 <br>
