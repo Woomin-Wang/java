@@ -743,8 +743,6 @@ Map<String, String> syncMap = Collections.synchronizedMap(new HashMap<>());
 
 내부적으로 락 분할, CAS, 논블로킹 알고리즘 등 다양한 동기화 기법을 사용해 성능과 안정성을 모두 고려한다.
 
-<br>
-
 - **ConcurrentHashMap**
     - HashMap의 스레드 안전 버전
     - 락 분할 등을 통해 일부 영역만 락을 걸어 병렬성을 향상
