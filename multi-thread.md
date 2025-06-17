@@ -589,6 +589,8 @@ private final Lock fairLock = new ReentrantLock(true);
 
 ### 동기화가 없을 경우 발생할 수 있는 문제
 
+멀티 스레드 환경에서 동기화가 제대로 이루어지지 않으면 발생하는 문제들은 다음과 같다.
+
 - **버퍼 오버플로우(Buffer Overflow)**
     - 버퍼가 가득 찼음에도 생산자가 계속 데이터를 추가하려 할 때 발생
 
@@ -600,42 +602,38 @@ private final Lock fairLock = new ReentrantLock(true);
 
 <br>
 
-### 문제 해결을 위한 두 가지 측면
+이런 문제들을 해결하려면 두 가지 측면에서 접근해야 한다.
 
-**1. 경쟁 조건 문제**
+**1. 경쟁 조건 문제(데이터 무결성 보장)**
 
-여러 스레드가 동시에 공유 자원을 변경하려고 할 때 발생한다.  
-
-이를 방지하기 위해 `synchronized`, `Lock` 등 **상호 배제를 보장하는 동기화 도구**를 사용한다.
-
-<br>
-
-**2. 버퍼 상태에 따른 흐름 제어 문제**  
-
-버퍼가 가득 찼거나 비어 있을 때, 스레드 간 작업 흐름을 제대로 조율하지 못한 경우 발생한다.
-
-**해결 방법: 조건 동기화(Condition Synchronization)**
-
-- 전통 방식: `wait()`, `notify()`, `notifyAll()` (synchronized와 함께 사용)
-
-- 고수준 방식: Condition 객체의 `await()`, `signal()`, `signalAll()` (Lock과 함께 사용)
+- 여러 스레드가 동시에 공유 자원을 변경하려고 할 때 발생한
+- 해결방법: 상호 배제를 보장하는 동기화 도구를 사용
+    - synchronized 키워드 (가장 기본적인 자바 동기화 도구)
+    - java.util.concurrent.locks.Lock 인터페이스의 구현체 (예: ReentrantLock)
 
 <br>
 
-**구현 방식**
-1. 생산자는 버퍼가 가득 차면 대기 (`wait()` / `await()`)  
+**2. 버퍼 상태에 따른 흐름 제어 문제(스레드 협력 조율)**  
 
-2. 소비자는 버퍼가 비어 있으면 대기  
+- 버퍼가 가득 찼거나 비어 있을 때처럼, 특정 조건이 만족되지 않은 상황에서 발생
+- 단순 경쟁 조건 방지로는 부족하며, 스레드 간 작업 흐름 조율 필요
+- 해결책: **조건 동기화(Condition Synchronization)**
+  
+    - 저수준 방식:
+        - `Object.wait()`: 스레드를 대기 상태로 만들고, 락을 해제
+        - `Object.notify()` / `Object.notifyAll()`: 대기 중인 스레드를 깨움
+        - 반드시 synchronized 블록 내에서 사용
 
-3. 반대쪽에서 작업이 완료되면 신호를 보내 대기 중인 스레드를 깨움 (`notify()` / `signal()`)  
+
+    - 고수준 방식:
+        - `java.util.concurrent.locks.Condition` 객체의 `await()`, `signal()`, `signalAll()`
+        - Lock 인터페이스(ReentrantLock 등)와 함께 사용
+        - `wait()`/`notify()`보다 유연하고 정교한 조건 동기화 제공
  
-
-> 버퍼 상태에 따른 흐름 제어 문제는, 버퍼가 가득 찼거나 비어 있는 상황에서 스레드 간 작업 흐름을 조율해야 하는 문제이며, 이를 해결하기 위해서는 **조건 동기화 메커니즘**이 필요하다.
-
-
-**BlockingQueue (하이레벨)**
-
-
+    - 가장 강력한 해결책:
+        - java.util.concurrent.BlockingQueue (하이레벨 동시성 컬렉션)
+        - 경쟁 조건 방지와 버퍼 상태에 따른 흐름 제어를 내부에서 모두 처리
+        - `put()`, `take()` 메서드 호출만으로 생산자-소비자의 대기 및 알림이 자동으로 처리
 
 <br>
 <br>
