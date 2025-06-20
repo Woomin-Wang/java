@@ -11,10 +11,38 @@
 
 <br>
 
-> 💡 왜 Byte로 처리될까요?
+> 💡 왜 Byte로 처리될까?
 > 
-> 컴퓨터의 기본적인 데이터 단위가 바이트이기 때문이다. 하드웨어 수준에서 CPU, 메모리 등 모든 장치는 데이터를 바이트 단위로 주고받는다.  
+> 컴퓨터의 기본적인 데이터 단위가 **바이트**이기 때문이다. 하드웨어 수준에서 CPU, 메모리 등 모든 장치는 데이터를 바이트 단위로 주고받는다.  
 > 어떤 종류의 데이터든 결국 컴퓨터 내부에서는 `0`과 `1`의 조합인 바이트 형태로 표현되어야만 저장하거나 전송할 수 있다.
+
+<br>
+
+### 기본 스트림 보조 스트림
+
+자바 스트림은 그 역할에 따라 두 가지로 구분된다:
+
+- **기본 스트림**
+  - **단독으로 사용 가능하며**, 파일이나 네트워크 등 실제 데이터 소스나 목적지에 직접 연결되는 스트림이다.
+  - 실제 데이터를 물리적으로 읽고 쓰는 역할을 한다.
+  - 예: `FileInputStream`, `FileOutputStream`, `FileReader`, `FileWriter`, `ByteArrayInputStream`
+
+- **보조 스트림**
+  - **단독으로 사용할 수 없고**, 다른 기본 스트림에 **추가적인 기능**(예: 버퍼링, 인코딩/디코딩)을 제공하는 스트림이다.
+  - 예: `BufferedInputStream`, `BufferOutputStream`, `InputStreamReader`, `OutputStreamWriter`, `DataOutputStream`, `DataInputStream`, `PrintStream`
+
+<br>
+ 
+> 💡 **기본 스트림 = 바이트 스트림**
+>
+> 어떤 경우든 실제 데이터 입출력은 바이트 단위로 이루어지기 때문에, **기본 스트림인 바이트 스트림이 반드시 필요**하며 문자 스트림은 이를 편리하게 처리하는 보조 스트림이다.
+
+<br>
+
+> 💡 인코딩(Encoding)이란?
+>
+> **인코딩**은 **문자열**을 컴퓨터가 이해하고 처리할 수 있는 **바이트(Byte) 형태로 변환하는 과정**을 말한다.  
+> 즉, 인코딩을 하려면 반드시 문자열 데이터가 필요하다.
 
 <br>
 
@@ -55,46 +83,13 @@ InputStream과 OutputStream은 **자바의 모든 바이트 기반 입출력 스
   - SocketOutputStream: 네트워크를 통해 전송할 데이터를 **쓴다.**
 - 주요 용도: 클라이언트와 서버 간의 통신처럼, 네트워크를 통해 데이터를 주고받을 때 사용
 
-
-<br>
-
-### PrintStream (편의성 출력 스트림)
-
-PrintStream은 OutputStream을 상속받는 클래스이다.
-
-자바 프로그램을 실행하면 PrintStream 클래스의 인스턴스인 `System.out`이 **자동으로 생성되어 바로 사용할 수 있도록 준비**된다.
-
-PrintStream은 부모 클래스의 `write()` 메서드뿐만 아니라, `print()`, `println()`, `printf()` 등 다양한 타입의 데이터를 편리하게 출력할 수 있는 메서드들도 제공한다.
-
-<br>
-
-**PrintStream 작동 흐름 요약**
-
-**1. 다양한 타입 데이터 입력**: 개발자가 `print()`나 `println()`에 숫자, 문자열 등 다양한 데이터를 넘겨준다.
-
-**2. 내부에서 문자열로 변환**: PrintStream은 입력받은 데이터를 문자열로 바꿔준다.
-
-**3. 바이트 배열로 인코딩**: 문자열을 `UTF-8` 같은 방식으로 바이트 배열로 변환한다.
-
-**4. write()로 전송**: 변환된 바이트 데이터를 `write()` 메서드를 통해 실제 출력 스트림(예:콘솔)으로 보낸다.
-
-<br>
-
-> 💡 인코딩(Encoding)이란?
->
-> **인코딩**은 **문자열**을 컴퓨터가 이해하고 처리할 수 있는 **바이트(Byte) 형태로 변환하는 과정**을 말한다.  
-> 즉, 인코딩을 하려면 반드시 문자열 데이터가 필요하다.
-
-
 <br>
 
 ## Buffer I/O Stream (버퍼 입출력 스트림)
 
-### 기본 스트림 보조 스트림
+버퍼 입출력 스트림은 **내부에 임시 저장 공간인 버퍼(Buffer)를 사용하여 I/O 성능을 최적화하는 보조 스트림**이다.
 
-- **기본 스트림**: FileOutputStream처럼 **단독으로 사용 가능하며**, 파일이나 네트워크 등 실제 데이터 소스나 목적지에 직접 연결되는 스트림이다.
-
-- **보조 스트림**: BufferedOutputStream처럼 **단독으로 사용할 수 없고**, 다른 기본 스트림에 추가적인 기능을 제공하는 스트림이다.
+직접적인 I/O 연산의 빈도를 줄여 효율성을 높인다.
 
 <br>
 
@@ -102,7 +97,8 @@ PrintStream은 부모 클래스의 `write()` 메서드뿐만 아니라, `print()
 ```java
 BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 ```
-> 이처럼 보조 스트림은 생성시 FileOutputStream과 같은 **기본 스트림을 인자로 전달**받아, 기본 스트름 위에 기능을 덧씌우는 형태로 작동한다.
+
+> 이처럼 보조 스트림은 생성시 FileOutputStream과 같은 **기본 스트림을 인자로 전달**받아, 기본 스트림 위에 버퍼링 기능을 덧씌우는 형태로 작동한다.
 
 <br>
 
@@ -138,7 +134,7 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 내부 버퍼에 **미리 데이터를 읽어두어**, `read()` 호출 시 버퍼에서 데이터를 제공함으로써 읽기 성능을 최적화하는 보조 스트림이다.
 
 - 동작 원리:
-  - 먼저 BufferedInputStream의 **내부 버퍼를 확인**한다.
+  - `read()` 호출 시, 먼저 BufferedInputStream의 **내부 버퍼를 확인**한다.
   - 요청한 데이터가 버퍼에 있다면, 실제 파일 접근 없이 **버퍼에서 즉시 데이터를 반환**한다.
   - 버퍼에 데이터가 없거나 부족한 경우, BufferedInputStream은 연결된 FileInputStream을 통해 **버퍼 크기만큼의 데이터를 한 번에 미리 읽어와 버퍼를 채운다.**
 - 이 과정을 통해 사용자가 1바이트씩 `read()`를 여러 번 호출하더라도, 실제 시스템 콜은 버퍼가 비워질 때 한 번만 발생한다.
@@ -148,12 +144,138 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 > 💡 **BufferedXxx 성능 저하 이유 (vs. 직접 버퍼링)**
 >
 > BufferedXxx 클래스들은 **멀티 스레드 환경에서 안전하도록 `synchronized` 처리**되어 있다.  
-> 락 처리 과정에서 발생하는 오버헤드 때문에, 싱글 스레드 환경에서는 개발자가 직접 버퍼를 다루는 것보다 성능이 떨어질 수 있다.
+> 락 처리 과정에서 발생하는 오버헤드 때문에, 싱글 스레드 환경에서는 개발자가 직접 버퍼를 다루는 것보다 성능이 떨어질 수 있다.  
+> 하지만, 일반적으로 버퍼링으로 얻는 I/O 횟수 감소 효과가 이 오버헤르드를 훨씬 상회하므로, 대부분의 경우 BufferdXxx를 사용하는 것이 권장된다.
 
 <br>
 <br>
 
+## Writer, Reader
+
+자바는 텍스트 데이터를 효율적으로 처리하기 위해 바이트 스트림과 별개로 **문자 기반 스트림**(`Writer`, `Reader`)을 제공한다.
+
+이들은 내부적으로 인코딩/디코딩 과정을 포함하여 개발자가 문자를 편리하게 다룰 수 있도록 돕는다.
+
+<br>
+
+### 바이트 ↔ 문자 스트림 변환: OutputStreamWriter & InputStreamReader
+
+이 두 클래스는 **바이트 스트림**(InputStream/OutputStream)과 **문자 스트림**(Reader/Writer) 사이의 **다리 역할**을 하며,
+
+텍스트 데이터를 입출력할 때 **인코딩**과 **디코딩**을 처리한다.
+
+> 문자 스트림을 사용하면 문자 데이터를 쉽게 다룰 수 있지만, 결국 **모든 데이터는 바이트 단위로 저장**되므로 내부적으로는 항상 인코딩 과정을 가진다.
+
+<br>
+
+**`OutputStreamWriter`: 문자를 바이트로 인코딩하여 출력**
+- 프로그램에서 작성한 문자를 OutputStream(바이트 스트림)으로 변환하여 출력
+- 내부적으로 **지정한 문자 인코딩**(예:UTF-8)에 따라 문자를 바이트로 변환 
+
+```java
+// 1. OutputStreamWriter로 파일에 쓰기 (문자 -> 바이트)
+try (FileOutputStream fos = new FileOutputStream(fileName);
+     OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+    osw.write(content);
+    System.out.println("파일에 텍스트가 UTF-8로 기록됨: " + content);
+}
+```
+
+위 코드는 OutputStreamWriter를 사용하여 메모리상의 **문자열** 데이터를 파일에 **바이트** 형태로 기록하는 과정이다.  
+
+OutputStreamWriter는 **보조 스트림**으로, 생성자 매개변수로 전달된 FileOutputStream 같은 기본 바이트 스트림을 내부에서 사용한다.
+
+`osw.wirte(content);`는 OutputStreamWriter의 `write()`에 String 타입의 `content` 변수 값을 전달하여 실제 파일 쓰기 작업을 수행하며,  
+
+이때 `content`의 문자들은 지정된 UTF-8 인코딩 방식으로 바이트로 변환되어 FileOutputStream을 통해 파일에 저장된다.
+
+
+<br>
+<br>
+
+**`InputStreamWriter`: 바이트를 문자로 디코딩하여 입력**
+- InputStream(바이트 스트림)에서 읽은 데이터를 **문자 단위로 처리할 수 있게 변환**
+- 바이트를 읽고, **지정된 문자 인코딩**에 따라 적절한 문자로 디코딩
+  
+```java
+// 2. InputStreamReader로 파일 읽기 (바이트 -> 문자)
+try (FileInputStream fis = new FileInputStream(fileName);
+     InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+    StringBuilder readContent = new StringBuilder();
+    int ch;
+    while ((ch = isr.read()) != -1) { // 문자 단위로 읽기
+        readContent.append((char) ch);
+    }
+    System.out.println("파일에서 읽은 텍스트 (UTF-8 디코딩): " + readContent);
+}
+```
+
+이 코드는 InputStreamReader를 사용하여 파일에 저장된 **바이트** 데이터를 다시 **문자열**형태로 읽어오는 과정을 보여준다.  
+
+InputStreamReader 또한 **보조 스트림**으로, FileInputStream과 같은 기본 바이트 스트림에 연결되어 작동한다.  
+
+`isr.read()`는 FileInputStream을 통해 읽어들인 바이트 데이터를 지정된 UTF-8 인코딩 방식에 따라 문자로 디코딩하며,  
+
+이 디코딩된 문자들을 StringBuilder에 추가하여 최종 문자열을 구성한다.
+
+
+<br>
+<br>
+
+### FileWriter, FileReader
 
 
 
 
+
+
+
+
+
+
+<br>
+<br>
+
+### 성능 최적화: BufferedWriter & BufferedReader
+
+이 두 클래스는 Writer와 Reader에 **버퍼링 기능**을 추가하여 텍스트 데이터의 입출력 성능을 향상 시키는 보조 스트림이다.
+
+**BufferedWriter: 문자를 버퍼에 모아 한 번에 출력**
+
+**BufferedReader: 문자를 버퍼에 미리 읽어와 효율적으로 입력**
+
+위에 Bufferd I/O Stream 설명이 이미 있음, readLine() 메서드 설명 정도?
+
+
+
+
+
+
+
+
+
+
+### PrintStream (편의성 출력 스트림)
+
+PrintStream은 OutputStream을 상속받는 클래스이다.
+
+자바 프로그램을 실행하면 PrintStream 클래스의 인스턴스인 `System.out`이 **자동으로 생성되어 바로 사용할 수 있도록 준비**된다.
+
+PrintStream은 부모 클래스의 `write()` 메서드뿐만 아니라, `print()`, `println()`, `printf()` 등 다양한 타입의 데이터를 편리하게 출력할 수 있는 메서드들도 제공한다.
+
+<br>
+
+**PrintStream 작동 흐름 요약**
+
+**1. 다양한 타입 데이터 입력**: 개발자가 `print()`나 `println()`에 숫자, 문자열 등 다양한 데이터를 넘겨준다.
+
+**2. 내부에서 문자열로 변환**: PrintStream은 입력받은 데이터를 문자열로 바꿔준다.
+
+**3. 바이트 배열로 인코딩**: 문자열을 `UTF-8` 같은 방식으로 바이트 배열로 변환한다.
+
+**4. write()로 전송**: 변환된 바이트 데이터를 `write()` 메서드를 통해 실제 출력 스트림(예:콘솔)으로 보낸다.
+
+<br>
+
+
+<br>
