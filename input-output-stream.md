@@ -42,8 +42,8 @@ InputStream과 OutputStream은 **자바의 모든 바이트 기반 입출력 스
 **FileInputStream / FileOutputStream**
 - 대상: 컴퓨터의 **파일 시스템**에 있는 파일
 - 특징:
- - FileInputStream: 파일에서 데이터를 **읽는다.**
- - FileOutputStream: 파일에 데이터를 **쓴다.**
+  - FileInputStream: 파일에서 데이터를 **읽는다.**
+  - FileOutputStream: 파일에 데이터를 **쓴다.**
 - 주요 용도: 로컬 컴퓨터의 파일에 데이터를 영구적으로 저장하거나, 파일에서 데이터를 읽어와 프로그램에서 처리할 때 사용
 
 <br>
@@ -86,9 +86,59 @@ PrintStream은 부모 클래스의 `write()` 메서드뿐만 아니라, `print()
 > 즉, 인코딩을 하려면 반드시 문자열 데이터가 필요하다.
 
 
+<br>
+
+## Buffer I/O Stream (버퍼 입출력 스트림)
+
+### 기본 스트림 보조 스트림
+
+- **기본 스트림**: FileOutputStream처럼 **단독으로 사용 가능하며**, 파일이나 네트워크 등 실제 데이터 소스나 목적지에 직접 연결되는 스트림이다.
+
+- **보조 스트림**: BufferedOutputStream처럼 **단독으로 사용할 수 없고**, 다른 기본 스트림에 추가적인 기능을 제공하는 스트림이다.
+
+<br>
+
+**보조 스트림 생성**
+```java
+BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
+```
+> 이처럼 보조 스트림은 생성시 FileOutputStream과 같은 **기본 스트림을 인자로 전달**받아, 기본 스트름 위에 기능을 덧씌우는 형태로 작동한다.
+
+<br>
+
+### BufferedOutputStream
+
+데이터를 **내부 버퍼에 모아 한 번에 출력**함으로써 입출력 성능을 크게 향상시키는 보조 스트림이다.
+
+- 생성:
+  - `FileOutputStream`과 같은 **기본 스트림을 감싸서 사용**하며, 생성 시 **버퍼 크기를 명시적으로 지정**할 수 있다.
+  - 미지정 시 JVM 기본 버퍼 크기 사용, 보통 8KB
+
+- 동작 원리:
+  - `write()` 호출 시, 데이터는 **즉시 파일로 전송되지 않고** BufferedOutputStream의 **내부 버퍼에 임시로 저장**된다.
+  - 버퍼에 저장된 데이터는 다음 조건 중 하나가 충족될 때 **한 번에(batch) 실제 파일로 기록**된다.
+    - **버퍼가 가득 찼을 때** (자동 `flush()`)
+    - `flush()` 메서드가 **명시적으로 호출**되었을 때
+    - BufferedOutputStream이 **닫힐 때** (`close()`)
+  - 이러한 버퍼링 메커니즘을 통해 잦은 파일 I/O 작업(시스템 콜)을 줄여 성능을 최적화한다.   
+ 
+- 자원 관리:
+  - `close()` 메서드를 호출하면:
+    - **자동 플러시**: 내부적으로 `flush()`가 **자동으로 호출**되어 버퍼에 남아있던 모든 데이터가 누락 없이 파일에 기록된다.
+    - **연쇄적인 자원 정리**: 이후 연결된 FileOutputStream의 `close()` 메서드도 **연쇄적으로 호출**되어 관련 파일 자원이 정리된다.
+ 
+> FileOutputStream만 닫고 BufferedOutputStream을 닫지 않으면, BufferedOutputStream의 버퍼에 남아있던 데이터가 파일에 저장되지 않아 심각한 데이터 손실이 발생할 수 있다.
+
+<br>
+
+### Buffered Input Stream
+
+FileInputStream에서 버퍼의 사이즈만큼 읽어오면 사용자가 read로 버퍼에 바이트를 읽음
+
+BufferedInputStream은 버퍼의 크기만큼 데이터를 미리 읽어서 버퍼에 보관해준다. 따라서 read()를 통해 1byte씩 데이터를 조회해도 성능이 최적화
 
 
-
+### 버퍼를 직접 다루는 것보다 BufferedXxx의 성능이 떨어지는 이유
 
 
 
