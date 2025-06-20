@@ -111,7 +111,7 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 데이터를 **내부 버퍼에 모아 한 번에 출력**함으로써 입출력 성능을 크게 향상시키는 보조 스트림이다.
 
 - 생성:
-  - `FileOutputStream`과 같은 **기본 스트림을 감싸서 사용**하며, 생성 시 **버퍼 크기를 명시적으로 지정**할 수 있다.
+  - FileOutputStream과 같은 **기본 스트림을 감싸서 사용**하며, 생성 시 **버퍼 크기를 명시적으로 지정**할 수 있다.
   - 미지정 시 JVM 기본 버퍼 크기 사용, 보통 8KB
 
 - 동작 원리:
@@ -126,19 +126,33 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
   - `close()` 메서드를 호출하면:
     - **자동 플러시**: 내부적으로 `flush()`가 **자동으로 호출**되어 버퍼에 남아있던 모든 데이터가 누락 없이 파일에 기록된다.
     - **연쇄적인 자원 정리**: 이후 연결된 FileOutputStream의 `close()` 메서드도 **연쇄적으로 호출**되어 관련 파일 자원이 정리된다.
- 
-> FileOutputStream만 닫고 BufferedOutputStream을 닫지 않으면, BufferedOutputStream의 버퍼에 남아있던 데이터가 파일에 저장되지 않아 심각한 데이터 손실이 발생할 수 있다.
 
 <br>
 
-### Buffered Input Stream
+> `FileOutputStream`만 닫고 `BufferedOutputStream`을 닫지 않으면, **버퍼에 남아 있던 데이터가 파일에 기록되지 않아 데이터 손실이 발생할 수 있다.**
 
-FileInputStream에서 버퍼의 사이즈만큼 읽어오면 사용자가 read로 버퍼에 바이트를 읽음
+<br>
 
-BufferedInputStream은 버퍼의 크기만큼 데이터를 미리 읽어서 버퍼에 보관해준다. 따라서 read()를 통해 1byte씩 데이터를 조회해도 성능이 최적화
+### BufferedInputStream
 
+내부 버퍼에 **미리 데이터를 읽어두어**, `read()` 호출 시 버퍼에서 데이터를 제공함으로써 읽기 성능을 최적화하는 보조 스트림이다.
 
-### 버퍼를 직접 다루는 것보다 BufferedXxx의 성능이 떨어지는 이유
+- 동작 원리:
+  - 먼저 BufferedInputStream의 **내부 버퍼를 확인**한다.
+  - 요청한 데이터가 버퍼에 있다면, 실제 파일 접근 없이 **버퍼에서 즉시 데이터를 반환**한다.
+  - 버퍼에 데이터가 없거나 부족한 경우, BufferedInputStream은 연결된 FileInputStream을 통해 **버퍼 크기만큼의 데이터를 한 번에 미리 읽어와 버퍼를 채운다.**
+- 이 과정을 통해 사용자가 1바이트씩 `read()`를 여러 번 호출하더라도, 실제 시스템 콜은 버퍼가 비워질 때 한 번만 발생한다.
+
+<br>
+
+> 💡 **BufferedXxx 성능 저하 이유 (vs. 직접 버퍼링)**
+>
+> BufferedXxx 클래스들은 **멀티 스레드 환경에서 안전하도록 `synchronized` 처리**되어 있다.  
+> 락 처리 과정에서 발생하는 오버헤드 때문에, 싱글 스레드 환경에서는 개발자가 직접 버퍼를 다루는 것보다 성능이 떨어질 수 있다.
+
+<br>
+<br>
+
 
 
 
