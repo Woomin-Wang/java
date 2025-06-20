@@ -260,23 +260,40 @@ FileReader fr = new FileReader(FILE_NAME, StandardCharsets.UTF_8); // 인코딩 
 
 ### BufferedWriter, BufferedReader: 성능 최적화
 
-이 두 클래스는 Writer와 Reader에 **버퍼링 기능**을 추가하여 텍스트 데이터의 입출력 성능을 향상 시키는 보조 스트림이다.
+이 두 클래스는 Writer와 Reader에 **버퍼링 기능**을 추가하여 텍스트 데이터의 입출력 성능을 향상 시키는 **보조 스트림**이다.
 
-**BufferedWriter: 문자를 버퍼에 모아 한 번에 출력**
+- **BufferedWriter**: 문자를 버퍼에 모아 한 번에 출력
 
-**BufferedReader: 문자를 버퍼에 미리 읽어와 효율적으로 입력**
+- **BufferedReader**: 문자를 버퍼에 미리 읽어와 효율적으로 입력
 
-위에 Bufferd I/O Stream 설명이 이미 있음, readLine() 메서드 설명 정도?
+<br>
 
-
-
-
+**`readLins()` 메서드**
 
 
+
+```java
+try (FileReader fr = new FileReader("text.txt");
+     BufferedReader br = new BufferedReader(fr)) {
+
+    String line;
+    while ((line = br.readLine()) != null) { // 핵심: readLine()으로 한 줄씩 읽고 null 여부 확인
+        System.out.println(line);
+    }
+}
+```
+
+> BufferedReader의 가장 유용한 기능 중 하나는 `readLine()`메서드이다.  
+>
+> 이 메서드는 **텍스트 한 줄 전체를 String 타입으로 반환**해준다.
+>
+> 줄바꿈 문자는 결과 문자열에 포함되지 않으며, 더 이상 읽을 라인이 없으면 `null`을 반환하므로 파일 내용을 줄 단위로 처리할 때 유용하다.
 
 
 <br>
 <br>
+
+## 기타 스트림
 
 ### PrintStream (편의성 출력 스트림)
 
@@ -292,13 +309,26 @@ PrintStream은 부모 클래스의 `write()` 메서드뿐만 아니라, `print()
 
 **1. 다양한 타입 데이터 입력**: 개발자가 `print()`나 `println()`에 숫자, 문자열 등 다양한 데이터를 넘겨준다.
 
-**2. 내부에서 문자열로 변환**: PrintStream은 입력받은 데이터를 문자열로 바꿔준다.
+**2. 내부에서 문자열로 변환**: PrintStream은 입력받은 데이터를 `toString()` 메서드 등을 활용하여 문자열로 바꿔준다.
 
-**3. 바이트 배열로 인코딩**: 문자열을 `UTF-8` 같은 방식으로 바이트 배열로 변환한다.
+**3. 바이트 배열로 인코딩**: 변환된 문자열을 `UTF-8` 같은 인코딩 방식으로 바이트 배열로 변환한다.
 
-**4. write()로 전송**: 변환된 바이트 데이터를 `write()` 메서드를 통해 실제 출력 스트림(예:콘솔)으로 보낸다.
+**4. write()로 전송**: 최종적으로 변환된 바이트 데이터를 `write()` 메서드를 통해 실제 출력 스트림(예:콘솔)으로 보낸다.
 
 <br>
+<br>
+
+### DataStream
+
+
+
+
+
+
+
+
+
+
 
 
 <br>
