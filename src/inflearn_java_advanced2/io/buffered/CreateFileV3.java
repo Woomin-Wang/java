@@ -1,21 +1,22 @@
 package inflearn_java_advanced2.io.buffered;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static inflearn_java_advanced2.io.buffered.BufferedConst.*;
 
-public class CreateFileV1 {
+public class CreateFileV3 {
     public static void main(String[] args) throws IOException {
 
         FileOutputStream fos = new FileOutputStream(FILE_NAME);
+        BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < FILE_SIZE; i++) {
-            fos.write(1);
+            bos.write(1);
         }
-        fos.close();
+        bos.close();
 
         long endTime = System.currentTimeMillis();
         System.out.println("File created: " + FILE_NAME);
@@ -23,3 +24,4 @@ public class CreateFileV1 {
         System.out.println("Time taken: " + (endTime - startTime) + "ms");
     }
 }
+

@@ -1,23 +1,26 @@
 package inflearn_java_advanced2.io.buffered;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static inflearn_java_advanced2.io.buffered.BufferedConst.BUFFER_SIZE;
 import static inflearn_java_advanced2.io.buffered.BufferedConst.FILE_NAME;
 
-public class ReadFileV1 {
+public class ReadFileV3 {
 
     public static void main(String[] args) throws IOException {
 
         FileInputStream fis = new FileInputStream(FILE_NAME);
+        BufferedInputStream bis = new BufferedInputStream(fis, BUFFER_SIZE);
         long startTime = System.currentTimeMillis();
 
         int fileSize = 0;
         int data;
-        while((data = fis.read()) != -1) {
+        while((data = bis.read()) != -1) {
             fileSize++;
         }
-        fis.close();
+        bis.close();
 
         long endTime = System.currentTimeMillis();
         System.out.println("File created: " + FILE_NAME);
