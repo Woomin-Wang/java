@@ -228,12 +228,16 @@ try (FileInputStream fis = new FileInputStream(fileName);
   - OutputStreamWriter를 상속하며, **내부적으로 FileOutputStream을 생성해 바이트 스트림 처리를 자동으로 수행한다.**
   - 따라서, 개발자는 바이트 스트림을 직접 다루지 않고도 문자열을 간편하게 파일에 쓸 수 있다.
   - 인코딩을 명시하지 않으면 운영체제의 **기본 문자 인코딩**이 사용된다.
+  - 파일에 데이터를 추가할지(append) 여부를 지정할 수 있다. 기본 값은 `false`(파일 내용을 덮어씀)
 
 ```java
-FileOutputStream fos = new FileOutputStream(FILE_NAME);
-OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+// 파일 내용을 덮어쓰는 경우 (기본 동작)
+FileWriter fwOverwrite = new FileWriter(FILE_NAME);
+FileWriter fwOverwriteWithEncoding = new FileWriter(FILE_NAME, StandardCharsets.UTF_8);
 
-FileWriter fw = new FileWriter(FILE_NAME, StandardCharsets.UTF_8); // 인코딩 지정 가능
+// 파일 끝에 데이터를 추가하는 경우 (append 모드)
+FileWriter fwAppend = new FileWriter(FILE_NAME, true); // true: append 모드 활성화
+FileWriter fwAppendWithEncoding = new FileWriter(FILE_NAME, true, StandardCharsets.UTF_8); // true: append 모드 활성화
 ```
 
 위 코드에서 볼 수 있듯이, FileWriter를 사용하면 **FileOutputStream을 직접 생성하고 OutputStreamWriter와 연결하는 과정을 생략**할 수 있다.
@@ -245,10 +249,12 @@ FileWriter fw = new FileWriter(FILE_NAME, StandardCharsets.UTF_8); // 인코딩 
 - InputStreamReader를 상속하며, **FileInputStream 생성을 내부적으로 처리**하여 파일에서 바이트 데이터를 읽어와 문자열로 쉽게 디코딩할 수 있다.
 
 ```java
+// FileInputStream과 InputStreamReader를 직접 사용하는 경우
 FileInputStream fis = new FileInputStream(FILE_NAME);
 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
 
-FileReader fr = new FileReader(FILE_NAME, StandardCharsets.UTF_8); // 인코딩 지정 가능
+// FileReader를 사용하는 경우 (인코딩 지정 가능)
+FileReader fr = new FileReader(FILE_NAME, StandardCharsets.UTF_8);
 ```
 
 <br>
