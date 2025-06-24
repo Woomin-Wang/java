@@ -4,14 +4,6 @@
 
 <br>
 
-## 학습 자료
-- 이것이 자바다(개정판) - 신용권, 임경균 
-- 인프런 김영한 자바 강의
-- 모던 자바 인 액션 
-
-<br>
-
-
 ## 내용 정리
 
 ### **[개인 정리]**
@@ -54,7 +46,13 @@
   
 <br>
 
-### **[김영한 실전 자바 중급 1 ~ 2편]**
+### [Modern Java in Action]
+- [Chap01. 자바8, 9, 10, 11:무슨 일이 일어나고 있는가?]()
+
+
+<br>
+
+### **[김영한 실전 자바]**
 - [Object 클래스](https://familiar-dragon-4ed.notion.site/Object-1c2bf88cd0f580e9999bda727b3ba5ca?pvs=4)
 - [불변 객체](https://familiar-dragon-4ed.notion.site/1c4bf88cd0f5803ca297d15f46035eef?pvs=4)
 - [String](https://familiar-dragon-4ed.notion.site/String-1c6bf88cd0f580d0b096df293f66f59d?pvs=4)
@@ -64,11 +62,6 @@
 - [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
 - [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
 - [제네릭](https://familiar-dragon-4ed.notion.site/1d8bf88cd0f5804ea056dc152cf8d510?pvs=4)
-
-<br>
-
-### [Modern Java in Action]
-- [Chap01. 자바8, 9, 10, 11:무슨 일이 일어나고 있는가?]()
 
 <br>
 
