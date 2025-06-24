@@ -36,13 +36,12 @@
 - [Chap11. 예외 처리](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f5800ab349d2bb35cefda1?pvs=4)
 - [Chap12. java.base 모듈](https://familiar-dragon-4ed.notion.site/Chap12-java-base-1d0bf88cd0f580c7b1b9fa222c9a9f10?pvs=4)
 - [Chap13. 제네릭](https://familiar-dragon-4ed.notion.site/Chap13-1d0bf88cd0f580ed822beab1240d9c2e?pvs=4)
-- [Chap14. 멀티 스레드]()
-- [Chap15. 컬렉션 자료구조]()
-- [Chap16. 람다식]()
-- [Chap17. 스트림 요소 처리]()
+- [Chap14. 멀티 스레드](https://familiar-dragon-4ed.notion.site/Chap14-1d0bf88cd0f580cd98d7edfad91ccb8c?source=copy_link)
+- [Chap15. 컬렉션 자료구조](https://github.com/Woomin-Wang/java/blob/main/collection-framework.md)
+- [Chap16. 람다식](https://familiar-dragon-4ed.notion.site/Chap16-1d0bf88cd0f5806585aef9377f6e6dea?source=copy_link)
+- [Chap17. 스트림 요소 처리](https://familiar-dragon-4ed.notion.site/Chap17-1d0bf88cd0f58091add8c72ea7861358?source=copy_link)
 - [Chap18. 데이터 입출력]()
 - [Chap19. 네트워크 입출력]()
-- [Chap20. 데이터베이스 입출력]()
   
 <br>
 
