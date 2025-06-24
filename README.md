@@ -64,6 +64,11 @@
 
 <br>
 
+### [Modern Java in Action]
+- [Chap01. 자바8, 9, 10, 11:무슨 일이 일어나고 있는가?]()
+
+<br>
+
 ### **[토이 프로젝트]**
 
 - [서점 관리 시스템](https://github.com/Woomin-Wang/java-toy-project)
