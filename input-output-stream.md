@@ -35,20 +35,20 @@
  
 > 💡 **기본 스트림 = 바이트 스트림**
 >
-> 어떤 경우든 실제 데이터 입출력은 바이트 단위로 이루어지기 때문에, **기본 스트림인 바이트 스트림이 반드시 필요**하며 문자 스트림은 이를 편리하게 처리하는 보조 스트림이다.
+> 어떤 경우든 실제 데이터 입출력은 바이트 단위로 이루어지기 때문에, **기본 스트림인 바이트 스트림이 반드시 필요**하다.
 
 <br>
 
 > 💡 인코딩(Encoding)이란?
 >
 > **인코딩**은 **문자열**을 컴퓨터가 이해하고 처리할 수 있는 **바이트(Byte) 형태로 변환하는 과정**을 말한다.  
-> 즉, 인코딩을 하려면 반드시 문자열 데이터가 필요하다.
+> 즉, 인코딩을 하려면 반드시 **문자열 데이터가 필요**하다.
 
 <br>
 
 ## InputStream, OutputStream (최상위 추상 클래스)
 
-InputStream과 OutputStream은 **자바의 모든 바이트 기반 입출력 스트림의 최상위 추상 클래스**이다. 
+`InputStream`과 `OutputStream`은 **자바의 모든 바이트 기반 입출력 스트림의 최상위 추상 클래스**이다. 
 
 데이터를 읽거나 쓰는 구체적인 방법보다는, **스트림이 데이터를 다루는 기본적인 규칙과 메서드(예: `read()`, `write()`)를 정의**한다.
 
@@ -95,10 +95,12 @@ InputStream과 OutputStream은 **자바의 모든 바이트 기반 입출력 스
 
 **보조 스트림 생성**
 ```java
-BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
+FileOutputStream fos = new FileOutputStream(FILE_NAME); // 파일 출력 스트림 생성 (기반 스트림)
+
+BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE); // 보조 스트림인 BufferedOutputStream 생성
 ```
 
-> 이처럼 보조 스트림은 생성시 FileOutputStream과 같은 **기본 스트림을 인자로 전달**받아, 기본 스트림 위에 버퍼링 기능을 덧씌우는 형태로 작동한다.
+> ✅ 이처럼 보조 스트림은 생성시 `FileOutputStream`과 같은 **기본 스트림을 인자로 전달**받아, 기본 스트림 위에 버퍼링 기능을 덧씌우는 형태로 작동한다.
 
 <br>
 
@@ -107,21 +109,21 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 데이터를 **내부 버퍼에 모아 한 번에 출력**함으로써 입출력 성능을 크게 향상시키는 보조 스트림이다.
 
 - 생성:
-  - FileOutputStream과 같은 **기본 스트림을 감싸서 사용**하며, 생성 시 **버퍼 크기를 명시적으로 지정**할 수 있다.
+  - `FileOutputStream`과 같은 **기본 스트림을 감싸서 사용**하며, 생성 시 **버퍼 크기를 명시적으로 지정**할 수 있다.
   - 미지정 시 JVM 기본 버퍼 크기 사용, 보통 8KB
 
 - 동작 원리:
-  - `write()` 호출 시, 데이터는 **즉시 파일로 전송되지 않고** BufferedOutputStream의 **내부 버퍼에 임시로 저장**된다.
+  - `write()` 호출 시, 데이터는 **즉시 파일로 전송되지 않고** `BufferedOutputStream`의 **내부 버퍼에 임시로 저장**된다.
   - 버퍼에 저장된 데이터는 다음 조건 중 하나가 충족될 때 **한 번에(batch) 실제 파일로 기록**된다.
     - **버퍼가 가득 찼을 때** (자동 `flush()`)
     - `flush()` 메서드가 **명시적으로 호출**되었을 때
-    - BufferedOutputStream이 **닫힐 때** (`close()`)
+    - `BufferedOutputStream`이 **닫힐 때** (`close()`)
   - 이러한 버퍼링 메커니즘을 통해 잦은 파일 I/O 작업(시스템 콜)을 줄여 성능을 최적화한다.   
  
 - 자원 관리:
   - `close()` 메서드를 호출하면:
     - **자동 플러시**: 내부적으로 `flush()`가 **자동으로 호출**되어 버퍼에 남아있던 모든 데이터가 누락 없이 파일에 기록된다.
-    - **연쇄적인 자원 정리**: 이후 연결된 FileOutputStream의 `close()` 메서드도 **연쇄적으로 호출**되어 관련 파일 자원이 정리된다.
+    - **연쇄적인 자원 정리**: 이후 연결된 `FileOutputStream`의 `close()` 메서드도 **연쇄적으로 호출**되어 관련 파일 자원이 정리된다.
 
 <br>
 
@@ -134,9 +136,9 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 내부 버퍼에 **미리 데이터를 읽어두어**, `read()` 호출 시 버퍼에서 데이터를 제공함으로써 읽기 성능을 최적화하는 보조 스트림이다.
 
 - 동작 원리:
-  - `read()` 호출 시, 먼저 BufferedInputStream의 **내부 버퍼를 확인**한다.
+  - `read()` 호출 시, 먼저 `BufferedInputStream`의 **내부 버퍼를 확인**한다.
   - 요청한 데이터가 버퍼에 있다면, 실제 파일 접근 없이 **버퍼에서 즉시 데이터를 반환**한다.
-  - 버퍼에 데이터가 없거나 부족한 경우, BufferedInputStream은 연결된 FileInputStream을 통해 **버퍼 크기만큼의 데이터를 한 번에 미리 읽어와 버퍼를 채운다.**
+  - 버퍼에 데이터가 없거나 부족한 경우, `BufferedInputStream`은 연결된 `FileInputStream`을 통해 **버퍼 크기만큼의 데이터를 한 번에 미리 읽어와 버퍼를 채운다.**
 - 이 과정을 통해 사용자가 1바이트씩 `read()`를 여러 번 호출하더라도, 실제 시스템 콜은 버퍼가 비워질 때 한 번만 발생한다.
 
 <br>
@@ -145,12 +147,14 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 >
 > BufferedXxx 클래스는 내부에 **synchronized로 동기화**되어 있어 멀티 스레드 환경에 안전하지만, 이로 인한 락 오버헤드 때문에 싱글 스레드에서는 직접 버퍼를 다루는 것보다 느릴 수 있다. 그럼에도 불구하고 버퍼링으로 I/O 횟수를 줄이는 이점이 더 크기 때문에 일반적으로 사용하는 것이 권장된다.
 
+
 <br>
 <br>
+
 
 ## Writer, Reader (문자 스트림)
 
-자바는 텍스트 데이터를 효율적으로 처리하기 위해 **바이트 스트림**과 별개로 **문자 스트림**(`Writer`, `Reader`)을 제공한다.  
+자바는 **텍스트 데이터**를 효율적으로 처리하기 위해 **바이트 스트림**과 별개로 **문자 스트림**(`Writer`, `Reader`)을 제공한다.  
 
 `Reader`와 `Writer`는 문자 단위(`char`)로 데이터를 읽고 쓰는 기본적인 추상 메서드들을 정의하고 있는 **추상 클래스**이며,    
 
@@ -160,66 +164,64 @@ BufferedOutputStream bos = new BufferedOutputStream(fos, BUFFER_SIZE);
 
 ### OutputStreamWriter, InputStreamReader: 바이트 ↔ 문자 스트림 변환
 
-OutputStream와 InputStreamReader는 자바 I/O 스트림에서 **문자 스트림**에 속하지만,  
+`OutputStream`와 `InputStreamReader`는 **문자 스트림**으로 단순히 문자 데이터를 처리하는 것을 넘어,  
 
-단순히 문자 데이터를 처리하는 것을 넘어, **바이트 스트림과 문자 스트림 사이에서 인코딩/디코딩을 수행하는 변환 스트림 역할을 한다.**
+**바이트 스트림과 문자 스트림 사이에서 인코딩/디코딩을 수행하는 변환 스트림 역할을 한다.**
 
 <br>
 
-**`OutputStreamWriter`: 문자를 바이트로 인코딩하여 출력**
-- 프로그램에서 작성한 문자를 OutputStream(바이트 스트림)으로 변환하여 출력
+**OutputStreamWriter**
+- 프로그램에서 작성한 문자를 `OutputStream`(바이트 스트림)으로 변환하여 출력
 - 내부적으로 **지정한 문자 인코딩**(예:UTF-8)에 따라 문자를 바이트로 변환 
 
 <br>
 
 **OutputStreamWriter 사용 코드**
 ```java
-try (FileOutputStream fos = new FileOutputStream(fileName);
-     OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+try (FileOutputStream fos = new FileOutputStream(FILE_NAME);
+    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
     osw.write(content);
-    System.out.println("파일에 텍스트가 UTF-8로 기록됨: " + content);
 }
 ```
 
-> 위 코드는 OutputStreamWriter를 사용하여 메모리상의 **문자열** 데이터를 파일에 **바이트** 형태로 기록하는 과정이다.  
+> `OutputStreamWriter`는 문제 데이터를 바이트로 변환해 출력하는 **변환 스트림**이며, `FileOutputStream`같은 **기반 바이트 스트림을 생성자 매개변수로 받아 내부에서 사용한다.**
 >
-> OutputStreamWriter는 **보조 스트림**으로, **생성자 매개변수로 전달된 FileOutputStream 같은 기본 바이트 스트림을 내부에서 사용한다.**
->
-> `osw.wirte(content);`는 OutputStreamWriter의 `write()`에 String 타입의 `content` 변수 값을 전달하여 실제 파일 쓰기 작업을 수행하며,
->
-> 이때, `content`의 문자들은 지정된 UTF-8 인코딩 방식으로 바이트로 변환되어 FileOutputStream을 통해 파일에 저장된다.
+> 이 구조를 통해 메모리상의 문자열 데이터를 파일에 저장할 수 있으며, 예를 들어 `osw.write(content);`를 호출하면 `content` 문자열이 **UTF-8 방식으로 바이트 인코딩**되어 `FileOutputStream`을 통해 실제 파일에 기록된다.
+
 
 <br>
 <br>
 
-**`InputStreamWriter`: 바이트를 문자로 디코딩하여 입력**
-- InputStream(바이트 스트림)에서 읽은 데이터를 **문자 단위로 처리할 수 있게 변환**
+
+**InputStreamWriter**
+- `InputStream`(바이트 스트림)에서 읽은 데이터를 **문자 단위로 처리할 수 있게 변환**
 - 바이트를 읽고, **지정된 문자 인코딩**에 따라 적절한 문자로 디코딩
 
 <br>
 
 **InputStreamWriter 사용 코드**
 ```java
-try (FileInputStream fis = new FileInputStream(fileName);
-     InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+try (FileInputStream fis = new FileInputStream(FILE_NAME);
+    InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
     StringBuilder readContent = new StringBuilder();
     int ch;
-    while ((ch = isr.read()) != -1) { // 문자 단위로 읽기
-        readContent.append((char) ch);
+    while((ch = isr.read()) != -1) { // 문자 단위로 읽기
+        readContent.append((char)ch);
     }
     System.out.println("파일에서 읽은 텍스트 (UTF-8 디코딩): " + readContent);
 }
 ```
 
-> 위 코드는 InputStreamReader를 사용하여 파일에 저장된 **바이트** 데이터를 다시 **문자열** 형태로 읽어오는 과정을 보여준다.  
+> `InputStreamReader`는 바이트 데이터를 문자로 변환하는 변환 스트림으로, `FileInputStream`과 같은 기본 바이트 스트림에 연결되어 동작한다.
 >
-> InputStreamReader 또한 **보조 스트림**으로, FileInputStream과 같은 기본 바이트 스트림에 연결되어 작동한다.  
->
-> `isr.read()`는 FileInputStream을 통해 읽어들인 바이트 데이터를 지정된 UTF-8 인코딩 방식에 따라 문자로 디코딩하며,  
+> `isr.read()`는 `FileInputStream`을 통해 읽어들인 바이트 데이터를 지정된 UTF-8 인코딩 방식에 따라 문자로 디코딩하며,  
 >
 > 이 디코딩된 문자들을 StringBuilder에 추가하여 최종 문자열을 구성한다.
 
+
 <br>
+<br>
+
 
 ### FileWriter, FileReader: 파일 기반 문자 입출력의 간편함
 
