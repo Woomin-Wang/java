@@ -29,7 +29,7 @@
 - [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
 - [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
 - [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
-- [제네릭](https://familiar-dragon-4ed.notion.site/1d8bf88cd0f5804ea056dc152cf8d510?pvs=4)
+- [제네릭](https://github.com/Woomin-Wang/java/blob/main/generic.md)
 - [컬렉션 프레임워크](https://github.com/Woomin-Wang/java/blob/main/collection-framework.md)
 - [멀티 스레드](https://github.com/Woomin-Wang/java/blob/main/multi-thread.md)
 - [입출력 스트림](https://github.com/Woomin-Wang/java/blob/main/input-output-stream.md)
