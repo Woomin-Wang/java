@@ -16,9 +16,23 @@
 - [Anonymous Class](https://velog.io/@woomin-wang/JAVA-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%97%90-%EC%84%A0%EC%96%B8%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%A9%94%EC%84%9C%EB%93%9C)
 - [JAR, WAR](https://velog.io/@woomin-wang/Java-%EC%9B%B9-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EB%B0%B0%ED%8F%AC-%EB%B0%A9%EC%8B%9D-JAR%EC%99%80-WAR%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EA%B3%BC-Spring-Boot)
 - [Generic](https://github.com/Woomin-Wang/java/blob/main/generic.md)
-- [Collection Framework](https://github.com/Woomin-Wang/java/blob/main/collection-framework.md)
-- [Multi Thread](https://github.com/Woomin-Wang/java/blob/main/multi-thread.md)
-- [I/O Stream](https://github.com/Woomin-Wang/java/blob/main/input-output-stream.md)
+
+
+<br>
+
+### **[인프런 김영한 실전 자바]**
+- [Object 클래스](https://familiar-dragon-4ed.notion.site/Object-1c2bf88cd0f580e9999bda727b3ba5ca?pvs=4)
+- [불변 객체](https://familiar-dragon-4ed.notion.site/1c4bf88cd0f5803ca297d15f46035eef?pvs=4)
+- [String](https://familiar-dragon-4ed.notion.site/String-1c6bf88cd0f580d0b096df293f66f59d?pvs=4)
+- [래퍼 객체](https://familiar-dragon-4ed.notion.site/1c8bf88cd0f5806295eaf95791b18831?pvs=4)
+- [열거형-ENUM](https://familiar-dragon-4ed.notion.site/ENUM-1cabf88cd0f5807a95fad9a786bb1fd6?pvs=4)
+- [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
+- [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
+- [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
+- [제네릭](https://familiar-dragon-4ed.notion.site/1d8bf88cd0f5804ea056dc152cf8d510?pvs=4)
+- [컬렉션 프레임워크](https://github.com/Woomin-Wang/java/blob/main/collection-framework.md)
+- [멀티 스레드](https://github.com/Woomin-Wang/java/blob/main/multi-thread.md)
+- [입출력 스트림](https://github.com/Woomin-Wang/java/blob/main/input-output-stream.md)
 
 <br>
 
@@ -45,24 +59,6 @@
   
 <br>
 
-### [Modern Java in Action]
-- [Chap01. 자바8, 9, 10, 11:무슨 일이 일어나고 있는가?]()
-
-
-<br>
-
-### **[김영한 실전 자바]**
-- [Object 클래스](https://familiar-dragon-4ed.notion.site/Object-1c2bf88cd0f580e9999bda727b3ba5ca?pvs=4)
-- [불변 객체](https://familiar-dragon-4ed.notion.site/1c4bf88cd0f5803ca297d15f46035eef?pvs=4)
-- [String](https://familiar-dragon-4ed.notion.site/String-1c6bf88cd0f580d0b096df293f66f59d?pvs=4)
-- [래퍼 객체](https://familiar-dragon-4ed.notion.site/1c8bf88cd0f5806295eaf95791b18831?pvs=4)
-- [열거형-ENUM](https://familiar-dragon-4ed.notion.site/ENUM-1cabf88cd0f5807a95fad9a786bb1fd6?pvs=4)
-- [날짜와 시간](https://familiar-dragon-4ed.notion.site/1c3bf88cd0f5802d9243c40bd2c5d78a?pvs=4)
-- [중첩 클래스, 내부 클래스](https://familiar-dragon-4ed.notion.site/1d0bf88cd0f58001a035d2024b08cbe1?pvs=4)
-- [예외 처리](https://familiar-dragon-4ed.notion.site/1d2bf88cd0f580ea8adffb54a1e698e3?pvs=4)
-- [제네릭](https://familiar-dragon-4ed.notion.site/1d8bf88cd0f5804ea056dc152cf8d510?pvs=4)
-
-<br>
 
 ### **[토이 프로젝트]**
 
