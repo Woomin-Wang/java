@@ -2,7 +2,7 @@ package inflearn_java_advanced1.thread.cas;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
+import static util.MyLogger.log;
 
 public class CasMainV2 {
 

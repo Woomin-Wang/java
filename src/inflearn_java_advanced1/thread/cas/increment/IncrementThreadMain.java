@@ -3,7 +3,7 @@ package inflearn_java_advanced1.thread.cas.increment;
 import java.util.ArrayList;
 import java.util.List;
 
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.ThreadUtils.sleep;
 
 public class IncrementThreadMain {
 

@@ -1,13 +1,12 @@
 package inflearn_java_advanced1.thread.executor.poolsize;
 
-import inflearn_java_advanced1.thread.executor.ExecutorUtils;
 import inflearn_java_advanced1.thread.executor.RunnableTask;
 
 import java.util.concurrent.*;
 
 import static inflearn_java_advanced1.thread.executor.ExecutorUtils.*;
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class PoolSizeMainV1 {
 

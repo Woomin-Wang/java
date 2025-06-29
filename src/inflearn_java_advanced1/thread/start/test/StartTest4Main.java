@@ -1,6 +1,6 @@
 package inflearn_java_advanced1.thread.start.test;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
+import static util.MyLogger.log;
 
 public class StartTest4Main {
     public static void main(String[] args) {

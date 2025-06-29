@@ -6,8 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static inflearn_java_advanced1.thread.executor.ExecutorUtils.printState;
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class PoolSizeMainV3 {
 

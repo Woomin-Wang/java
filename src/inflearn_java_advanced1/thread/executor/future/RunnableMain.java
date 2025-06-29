@@ -2,8 +2,8 @@ package inflearn_java_advanced1.thread.executor.future;
 
 import java.util.Random;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class RunnableMain {
     public static void main(String[] args) throws InterruptedException {

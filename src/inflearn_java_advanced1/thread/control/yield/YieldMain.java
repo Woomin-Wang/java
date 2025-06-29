@@ -1,7 +1,5 @@
 package inflearn_java_advanced1.thread.control.yield;
 
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
-
 public class YieldMain {
 
     static final int THREAD_COUNT = 1000;

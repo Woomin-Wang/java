@@ -2,7 +2,7 @@ package inflearn_java_advanced1.thread.collection.simple.list;
 
 import java.util.Arrays;
 
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.ThreadUtils.sleep;
 
 public class BasicList implements SimpleList {
 

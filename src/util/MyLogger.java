@@ -1,4 +1,4 @@
-package inflearn_java_advanced1.util;
+package util;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

@@ -3,7 +3,7 @@ package inflearn_java_advanced1.thread.bounded;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
+import static util.MyLogger.log;
 
 public class BoundedQueueV6_2 implements BoundedQueue {
 

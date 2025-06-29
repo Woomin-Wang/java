@@ -3,8 +3,8 @@ package inflearn_java_advanced1.thread.sync;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class BankAccountV4 implements BankAccount {
 

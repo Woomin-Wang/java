@@ -1,7 +1,6 @@
 package inflearn_java_advanced1.thread.executor.future;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
 
 public class SumTaskMainV1 {
     public static void main(String[] args) throws InterruptedException {

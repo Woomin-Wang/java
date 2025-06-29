@@ -1,6 +1,6 @@
 package inflearn_java_advanced1.thread.sync.test;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
+import static util.MyLogger.log;
 
 public class SyncTest2Main {
 

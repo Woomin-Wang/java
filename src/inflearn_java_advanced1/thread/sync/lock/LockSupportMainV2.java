@@ -2,8 +2,8 @@ package inflearn_java_advanced1.thread.sync.lock;
 
 import java.util.concurrent.locks.LockSupport;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class LockSupportMainV2 {
 

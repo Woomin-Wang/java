@@ -2,8 +2,7 @@ package inflearn_java_advanced1.thread.cas.spinlock;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
 
 public class SpinLock {
 

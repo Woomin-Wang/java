@@ -3,8 +3,7 @@ package inflearn_java_advanced1.thread.bounded;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import static inflearn_java_advanced1.util.MyLogger.log;
-import static inflearn_java_advanced1.util.ThreadUtils.sleep;
+import static util.MyLogger.log;
 
 public class BoundedQueueV3 implements BoundedQueue {
 
