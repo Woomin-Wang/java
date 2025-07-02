@@ -54,8 +54,8 @@
 - [Chap15. 컬렉션 자료구조](https://github.com/Woomin-Wang/java/blob/main/collection-framework.md)
 - [Chap16. 람다식](https://familiar-dragon-4ed.notion.site/Chap16-1d0bf88cd0f5806585aef9377f6e6dea?source=copy_link)
 - [Chap17. 스트림 요소 처리](https://familiar-dragon-4ed.notion.site/Chap17-1d0bf88cd0f58091add8c72ea7861358?source=copy_link)
-- [Chap18. 데이터 입출력]()
-- [Chap19. 네트워크 입출력]()
+- [Chap18. 데이터 입출력](https://familiar-dragon-4ed.notion.site/Chap18-1d0bf88cd0f58055af29d300d6835c3b?source=copy_link)
+- [Chap19. 네트워크 입출력](https://familiar-dragon-4ed.notion.site/Chap19-1d0bf88cd0f580dba285d2c9d8dde1cc?source=copy_link)
   
 <br>
 
