@@ -1,5 +1,5 @@
 ## 학습 내용
-- WiSoftLab에서 진행한 세미나, 인프런 강의 수강, 그리고 개인 학습 내용을 정리한 기록입니다.
+- WiSoftLab에서 진행한 세미나, 인프런 강의, 개인 학습 내용을 정리하였습니다.
 - Java에 대한 문법과 사용법을 익힙니다.
 
 <br>
@@ -15,7 +15,7 @@
 - [Abstract Class, Interface](https://velog.io/@woomin-wang/JAVA-%EC%B6%94%EC%83%81%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4-%EB%AC%B4%EC%97%87%EC%9D%84-%EC%84%A0%ED%83%9D%ED%95%A0%EA%B9%8C)
 - [Anonymous Class](https://velog.io/@woomin-wang/JAVA-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%97%90-%EC%84%A0%EC%96%B8%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%A9%94%EC%84%9C%EB%93%9C)
 - [JAR, WAR](https://velog.io/@woomin-wang/Java-%EC%9B%B9-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EB%B0%B0%ED%8F%AC-%EB%B0%A9%EC%8B%9D-JAR%EC%99%80-WAR%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90%EA%B3%BC-Spring-Boot)
-
+- [Record](https://velog.io/@woomin-wang/Java-Record)
 
 <br>
 
