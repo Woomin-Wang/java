@@ -60,7 +60,4 @@
 <br>
 
 
-### **[토이 프로젝트]**
-
-- [서점 관리 시스템](https://github.com/Woomin-Wang/java-toy-project)
 
