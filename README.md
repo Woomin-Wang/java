@@ -1,10 +1,7 @@
-## 학습 내용
-- WiSoftLab에서 진행한 세미나, 인프런 강의 수강, 그리고 개인 학습 내용을 정리한 기록입니다.
-- Java에 대한 문법과 사용법을 익힙니다.
+## Java Notes
+Java 학습 과정을 기록하고, 실습 코드와 참고 자료를 정리한 공간입니다.
 
 <br>
-
-## 내용 정리
 
 ### **[개인 정리]**
 - [Interpreter, Compiler](https://velog.io/@woomin-wang/JAVA-%EC%BB%B4%ED%8C%8C%EC%9D%BC%EB%9F%AC%EC%99%80-%EC%9D%B8%ED%84%B0%ED%94%84%EB%A6%AC%ED%84%B0%EC%9D%98-%EC%B0%A8%EC%9D%B4)
@@ -58,9 +55,8 @@
 - [Chap19. 네트워크 입출력]()
   
 <br>
+<br>
 
 
-### **[토이 프로젝트]**
 
-- [서점 관리 시스템](https://github.com/Woomin-Wang/java-toy-project)
 
